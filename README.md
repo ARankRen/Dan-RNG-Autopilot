@@ -1,4 +1,3 @@
-[Dan_RNG_Autopilot_R1_6_1_README_Updated.md](https://github.com/user-attachments/files/34521332/Dan_RNG_Autopilot_R1_6_1_README_Updated.md)
 <div align="center">
 
 # 🎲 Dan RNG Autopilot
