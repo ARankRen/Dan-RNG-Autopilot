@@ -205,7 +205,6 @@ Depending on the current game state, you can see information such as:
 
 The log gives you an overview of what the macro has been doing without needing to watch the Roblox screen the whole time.
 </details>
----
 
 ## 📥 Download & installation
 
