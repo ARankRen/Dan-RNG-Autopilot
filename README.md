@@ -1,13 +1,13 @@
-[README.md](https://github.com/user-attachments/files/34521023/README.md)
+[Dan_RNG_Autopilot_README.md](https://github.com/user-attachments/files/34521159/Dan_RNG_Autopilot_README.md)
 <div align="center">
 
 # 🎲 Dan RNG Autopilot
 
 ### Automated progression. Intelligent decisions. Built for long sessions.
 
-**A feature-rich Windows macro for the Roblox experience *Dan RNG*.**
+**My Windows automation macro for the Roblox game *Dan RNG*.**
 
-![Version](https://img.shields.io/badge/Documented%20version-R1.6-7657E8?style=for-the-badge)
+![Version](https://img.shields.io/badge/Version-R1.6-7657E8?style=for-the-badge)
 ![Platform](https://img.shields.io/badge/Platform-Windows%2010%20%2F%2011-0078D6?style=for-the-badge)
 ![Project](https://img.shields.io/badge/Project-Community%20tool-30363D?style=for-the-badge)
 ![Status](https://img.shields.io/badge/Status-Live%20testing%20recommended-E3A008?style=for-the-badge)
@@ -22,14 +22,14 @@
 
 ## 📖 Overview
 
-**Dan RNG Autopilot** automates much of the repetitive progression in Dan RNG while attempting to make decisions based on the game's *current visible state*, rather than blindly clicking on a fixed timer.
+I made **Dan RNG Autopilot** to automate the repetitive progression in Dan RNG. Instead of just clicking on a fixed timer, it tries to make decisions using what it can actually see in the game.
 
-It is designed for players who want to automate rolling, upgrade purchasing, rebirth progression, Index Collection and long-running sessions. Additional tools help with goal selection, visual detection, session statistics, Discord notifications and recovery from common interruptions.
+It handles rolling, upgrades, rebirths, Index Collection and longer sessions. I also added configurable goals, visual detection, session statistics, Discord notifications and recovery tools to make it more reliable.
 
-The underlying idea is simple: **the macro should understand what it is trying to accomplish, verify what it can, and avoid taking destructive actions when the game state is uncertain.**
+My main goal is simple: **the macro should know what it is trying to do, verify important actions, and avoid making risky decisions when it cannot tell what is happening.**
 
 > [!IMPORTANT]
-> **Version note:** This README describes the documented **R1.6 feature set**. Some features have passed offline or simulated checks but still need confirmation in live Roblox sessions. Availability and UI labels may vary between release packages. Check the release notes for the exact build you download.
+> **Version note:** This README covers **R1.6**. Some features have been tested outside live Roblox sessions and still need more in-game testing. Features and UI options can differ between releases, so check the release notes for the version you download.
 
 ### At a glance
 
@@ -50,7 +50,7 @@ The underlying idea is simple: **the macro should understand what it is trying t
 
 ## 🖼️ Screenshots
 
-Add real screenshots of your build to `docs/images/` before publishing this section. Good screenshots to include are the main dashboard, settings panel, active automation screen and a sample Discord notification.
+I will add screenshots of the main dashboard, settings, the macro running and Discord notifications here. They will be stored in `docs/images/`.
 
 <!-- Replace these comments when screenshots exist:
 ![Dashboard](docs/images/dashboard.png)
@@ -89,11 +89,11 @@ The default upgrade strategy prioritises efficient progression:
 3. Reassess upgrades when the game state or progression stage changes.
 4. Respect configured goals or protected gem balances where applicable.
 
-Adaptive farming is part of the documented R1.6 setup and is intended to be **enabled by default**. The macro may adjust its behaviour based on progress rather than strictly following one fixed loop.
+In R1.6, **Adaptive Farming is enabled by default**. It allows the macro to adjust its approach based on progression instead of doing exactly the same thing every cycle.
 
 ### 📚 Index Collection automation
 
-For players working through Index Collection, the macro includes a staged workflow that progresses through the documented limit sequence:
+For players working through Index Collection, the macro includes a staged workflow that progresses through the following limit sequence:
 
 `1 → 50 → 1,000 → 50,000 → Unlimited`
 
@@ -101,7 +101,7 @@ The goal is to handle Index tasks before returning to normal farming, without re
 
 ### 🎯 Hunter Mode and goal-based farming
 
-**Hunter Mode** is intended for players who want to keep rolling for rare finds **without carrying out rebirths**. This is useful when the main priority is collecting or hunting high-rarity rolls rather than resetting progression.
+I added **Hunter Mode** for when you just want to roll for rare auras **without rebirthing**. It is useful for collecting or chasing rare rolls instead of focusing on rebirth progression.
 
 Other goal-oriented options include:
 
@@ -113,7 +113,7 @@ Other goal-oriented options include:
 Smart Secret Farming is optional rather than mandatory. Its intended late-game use includes situations around **Luck level 800+**, after applicable Index work; actual behaviour depends on the game state and selected settings.
 
 > [!NOTE]
-> In the documented R1.6 build, Hunter Mode could still unnecessarily open the **Rebirth** menu at startup or after Index Collection, even though actual rebirth actions were disabled. This is a known issue targeted for a later fix. Do not describe that fix as released until it is verified.
+> **Known R1.6 issue:** Hunter Mode can still open the **Rebirth** menu at startup or after Index Collection, even though actual rebirth actions are disabled. I plan to fix the unnecessary navigation in a later release.
 
 ### 👁️ Visual recognition and cutscene protection
 
@@ -129,7 +129,7 @@ These checks are especially relevant to Secret, Forbidden and Omega-tier events.
 
 ### 🛠️ Recovery and reliability
 
-R1.6 includes reliability-focused systems designed for longer unattended sessions:
+I have added several reliability features to help with longer unattended sessions:
 
 - Rolling-progress watchdogs.
 - Retries and state rechecks after uncertain interactions.
@@ -140,7 +140,7 @@ R1.6 includes reliability-focused systems designed for longer unattended session
 - Diagnostic logging and screenshots for investigating failures.
 - Anti-AFK behaviour that is **disabled while paused**.
 
-The macro is designed for unattended use, but **no version should be assumed safe for unlimited unattended operation without testing it in your own setup**.
+The macro is built with unattended sessions in mind, but **I still recommend testing each new version before leaving it running for hours**.
 
 ### 📊 Live dashboard and diagnostics
 
@@ -157,7 +157,7 @@ Statistics derived from OCR or incomplete event tracking may be estimates or una
 
 ### 🔔 Optional Discord notifications
 
-Configure a **Discord webhook** to receive outgoing notifications about relevant macro events. The documented design includes session-start information, session-end summaries, configuration changes applied after a pause, and verified important events or recoveries where supported by the build.
+Configure a **Discord webhook** to receive outgoing notifications about relevant macro events. Depending on your version, alerts can include session starts, session summaries, settings changes, confirmed rare events and recovery messages.
 
 Notifications are **one-way alerts only**. The macro is not a Discord bot and does not accept remote commands through Discord.
 
@@ -191,7 +191,7 @@ An optional dimming feature is designed to reduce visual distraction across **al
 
 #### Option A — Run the supplied R1.6 source package
 
-The documented R1.6 package is a **source-and-builder distribution**, not a confirmed precompiled EXE release.
+The R1.6 package is distributed as **source code with an optional EXE builder**, rather than a confirmed prebuilt EXE release.
 
 1. Extract the package.
 2. Install a compatible Python version if the package requires one.
@@ -275,7 +275,7 @@ The macro's ability to locate controls depends on what it sees. For best results
 
 ### Editing settings while paused
 
-R1.6 is designed to allow relevant goals, rebirth targets and settings to be changed while paused. Resume is the point at which those changes are intended to take effect; a corresponding Discord **configuration updated** alert may be sent when a webhook is enabled.
+In R1.6, you can change supported goals, rebirth targets and other settings while paused. The changes are applied when you resume, and a Discord **configuration updated** alert may be sent if webhooks are enabled.
 
 Do not change underlying files or forcibly restart multiple copies of the macro to adjust a running session.
 
@@ -349,7 +349,7 @@ Goal or rebirth condition satisfied?
 Update session statistics and repeat
 ```
 
-This is a conceptual outline, **not a promise about every internal step or menu sequence**. The live implementation also has safeguards, delays and special-case handling.
+This is a simplified overview of how my macro works. The actual code also includes timing checks, safeguards and extra recovery steps.
 
 ---
 
@@ -365,7 +365,7 @@ Use Debug Mode and the available diagnostic-export or screenshot controls when t
 | Luck, rarity or gems look wrong | OCR can misread digits or UI text. Check the visible game value and report the screenshot rather than assuming the macro is correct. |
 | Index Collection gets stuck | Verify the current stage and whether the game UI has changed; enable diagnostics. |
 | Rare cutscene interrupts navigation | Do not force-click through the animation. Let the UI return and check whether recovery resumes normally. |
-| Hunter Mode opens Rebirth menu | Known R1.6 navigation issue. Rebirth execution should remain blocked in Hunter Mode, but menu opening may still occur. |
+| Hunter Mode opens Rebirth menu | Known R1.6 issue: Hunter Mode blocks rebirths, but can still open the Rebirth menu unnecessarily. |
 | Discord notifications are missing | Check whether webhooks are enabled, the URL is current, the channel permits posting and the triggering event was actually verified. |
 | Dimming does not clear correctly | Stop the macro, exit its overlay/process if necessary and restore the normal display state. |
 | Automation gets stuck after a UI update | Stop and collect diagnostics; the recognition logic may need to be updated for the new Roblox/Dan RNG interface. |
@@ -377,7 +377,7 @@ Use Debug Mode and the available diagnostic-export or screenshot controls when t
 - Auto-recovery cannot guarantee recovery from every disconnect, UI state or game update.
 - Session statistics may be incomplete if a value was not reliably observed.
 - Long unattended sessions require live validation on the machine where the macro is running.
-- The documented **R1.6 Hunter Mode navigation issue** is still an issue unless a later release explicitly fixes it.
+- The **R1.6 Hunter Mode navigation issue** is still present unless a newer release explicitly fixes it.
 - Offline tests are not a substitute for real-game tests.
 
 ---
@@ -400,7 +400,7 @@ The macro is not an anti-cheat bypass, does not guarantee account safety and sho
 
 ## 🗺️ Roadmap and proposed improvements
 
-The following items have been discussed as **future changes or fixes**. **They are not claimed to be available in the documented R1.6 package.**
+These are changes and improvements I want to work on. **They are not included in R1.6 unless a newer release specifically says otherwise.**
 
 - [ ] Fully bypass Rebirth menu navigation in Hunter Mode, including startup and post-Index flows.
 - [ ] Add **Omega (1 in 1 trillion base rarity)** as an explicit rebirth target.
@@ -409,7 +409,7 @@ The following items have been discussed as **future changes or fixes**. **They a
 - [ ] Confirm all recovery, dimming, Discord and OCR features through extended live-game testing.
 - [ ] Expand documentation with verified screenshots and real release-by-release changelogs.
 
-Plans may change; check Releases for what actually shipped.
+Plans might change. Check Releases to see what has actually been added.
 
 ---
 
@@ -425,7 +425,7 @@ No. It is an unofficial community-made automation project and is not endorsed by
 <details>
 <summary><strong>Does the macro require an EXE?</strong></summary>
 
-No. The documented R1.6 package can be started from its extracted source using `RUN_FROM_SOURCE.bat`. The package also includes an optional Windows executable builder. A prebuilt EXE should only be advertised if one has actually been published.
+No. R1.6 can be run from the extracted source using `RUN_FROM_SOURCE.bat`. I have also included an optional Windows EXE builder. If I publish a prebuilt EXE, it will be available in Releases.
 
 </details>
 
@@ -439,14 +439,14 @@ The intended R1.6 workflow is to **Pause**, edit supported settings and **Resume
 <details>
 <summary><strong>Will Hunter Mode rebirth?</strong></summary>
 
-Hunter Mode is designed to prevent actual rebirth actions. However, the documented R1.6 version may still open the Rebirth interface unnecessarily. That menu-navigation issue is separate from executing a rebirth.
+Hunter Mode blocks actual rebirth actions. In R1.6, it may still open the Rebirth menu unnecessarily. I plan to fix that navigation issue.
 
 </details>
 
 <details>
 <summary><strong>Can I automate from a second monitor?</strong></summary>
 
-The macro normally targets the display configured as **primary in Windows**, regardless of whether Windows numbers it 1 or 2. Verify your configuration and run a short supervised test.
+The macro normally targets the display set as **primary in Windows**, even if Windows calls it Monitor 2. Check your setup and do a short test first.
 
 </details>
 
@@ -477,27 +477,23 @@ Use the repository's **Issues** section if enabled. Include the version, setting
 
 | Version | Notes |
 | --- | --- |
-| **R1.6** | Documented feature expansion: Hunter Mode, adaptive farming, optional Smart Secret Farming, paused configuration changes, goal handling, dashboard, recovery and session features. Live validation remains important. |
+| **R1.6** | Feature expansion: Hunter Mode, adaptive farming, optional Smart Secret Farming, paused configuration changes, goal handling, dashboard, recovery and session features. Live validation remains important. |
 | **R1.5.9** | Earlier cutscene-protection and progression base retained by R1.6. |
 | **R1.5.4** | Earlier improvements to reconnect/recovery, diagnostic tools, gem/rank recognition and Index Collection workflow. |
 
-These are **high-level historical notes**, not a complete file-level changelog. For precise bug fixes and availability, consult the individual release description.
+This is just a short version history, not a full changelog. I will keep the individual release notes more detailed.
 
 ---
 
-## 🤝 Feedback and contributions
+## 🤝 Feedback and bug reports
 
-Found a bug or have a useful idea? Open a GitHub Issue (if enabled) and explain the intended behaviour, the actual behaviour and how to reproduce the problem. Screenshots or logs are helpful when they do not disclose private information.
-
-If the repository includes source code and accepts pull requests, check its contribution instructions before submitting a change. Public visibility alone does **not** establish an open-source licence.
-
-## 📄 Licence
-
-**Licence not yet specified.** The repository owner should choose and add a `LICENSE` file before inviting reuse or redistribution of the source. Do not assume permission to reuse the source merely because it appears on GitHub.
+If you find a bug or have an idea for a feature, feel free to open an Issue. Please include the version, what you expected to happen, what actually happened and how to reproduce it. Screenshots and logs are useful, but **remove webhook URLs and other private information** first.
 
 ## ⚠️ Disclaimer
 
-Dan RNG Autopilot is an **unofficial, third-party automation utility**. It is provided without guarantees of compatibility, uninterrupted operation, game-rule compliance or account safety. The author is not affiliated with Roblox or the developers of Dan RNG. Use is at your own discretion and risk.
+**This project was made with the help of AI.** I use AI tools to help develop, improve, debug and document the macro. I make the decisions about its features and direction, and I test the results. AI-assisted code can still contain bugs, so I cannot guarantee that everything will work perfectly.
+
+Dan RNG Autopilot is an **unofficial third-party tool** and is not affiliated with Roblox or the developers of Dan RNG. Using automation may go against game rules or Roblox policies, so **use it at your own risk**. I cannot guarantee compatibility with future updates, uninterrupted operation or account safety.
 
 ---
 
