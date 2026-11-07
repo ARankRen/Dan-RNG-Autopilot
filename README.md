@@ -205,8 +205,10 @@ Depending on the current game state, you can see information such as:
 
 The log gives you an overview of what the macro has been doing without needing to watch the Roblox screen the whole time.
 </details>
+---
+<details>
+<summary><b>📥 Download & Installation</b></summary>
 
-## 📥 Download & installation
 
 ### Requirements
 
@@ -231,7 +233,9 @@ You only need the release download to run the application. There are no Python s
 
 ---
 
-## 🚀 How to use the macro
+<details>
+<summary><b>🚀 How to use the macrop</b></summary>
+
 
 ### 1. Launch Dan RNG
 
