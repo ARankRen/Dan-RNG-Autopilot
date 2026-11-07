@@ -233,10 +233,11 @@ The log gives you an overview of what the macro has been doing without needing t
 6. Configure the macro using the steps below.
 
 You only need the release download to run the application. There are no Python setup or code-building steps.
-<details>
+</details>
     
 ---
 
+<details>
 <summary><b>🚀 How to use the macrop</b></summary>
 
 
