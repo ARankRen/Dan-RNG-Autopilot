@@ -238,7 +238,7 @@ You only need the release download to run the application. There are no Python s
 ---
 
 <details>
-<summary><b>🚀 How to use the macrop</b></summary>
+<summary><b>🚀 How to use the macro</b></summary>
 
 
 ### 1. Launch Dan RNG
