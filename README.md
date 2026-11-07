@@ -46,7 +46,8 @@ You can use it for regular rebirth farming or switch to **Hunter Mode** to focus
 | 📊 **Session dashboard** | Displays progress, activity and session information. |
 
 ---
-
+<details>
+<summary>Click to expand</summary>
 ## ✨ Features
 
 ### 🎲 Automatic rolling
@@ -204,7 +205,7 @@ Depending on the current game state, you can see information such as:
 - Recent actions and event messages.
 
 The log gives you an overview of what the macro has been doing without needing to watch the Roblox screen the whole time.
-
+</details>
 ---
 
 ## 📥 Download & installation
