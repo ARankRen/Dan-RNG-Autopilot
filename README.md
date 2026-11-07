@@ -46,6 +46,7 @@ You can use it for regular rebirth farming or switch to **Hunter Mode** to focus
 | 📊 **Session dashboard** | Displays progress, activity and session information. |
 
 ---
+
 <details>
 <summary><b>✨ Features</b></summary>
 
@@ -230,10 +231,10 @@ The log gives you an overview of what the macro has been doing without needing t
 6. Configure the macro using the steps below.
 
 You only need the release download to run the application. There are no Python setup or code-building steps.
-
+<details>
+    
 ---
 
-<details>
 <summary><b>🚀 How to use the macrop</b></summary>
 
 
@@ -286,6 +287,7 @@ The macro begins its selected workflow, switching between rolling, upgrades and 
 - Use **Stop** or **F4** to end the session.
 
 **Pause and Stop are different:** Pause keeps your current session, while Stop ends it. Starting again after Stop begins a new session with new session statistics.
+</details>
 
 ---
 
@@ -302,10 +304,13 @@ The macro begins its selected workflow, switching between rolling, upgrades and 
 | **F7** | Capture a diagnostic screenshot. |
 
 The main day-to-day controls are **Start**, **Stop**, **Pause** and **Resume**. The extra shortcuts are available for diagnostics.
+</details>
 
 ---
 
-## Settings & modes
+<details>
+<summary><b>Settings & modes</b></summary>
+
 
 ### Picking a rebirth target
 
@@ -343,6 +348,7 @@ To change a supported setting while farming:
 3. Press **Resume** or **F5**.
 
 The session continues with the updated configuration.
+</details>
 
 ---
 
@@ -361,7 +367,9 @@ Discord notifications are optional. They let you see key session updates from a 
 
 ---
 
-## 🧠 How the macro works (roughly)
+<details>
+<summary><b>🧠 How the macro works</b></summary>
+
 
 Dan RNG Autopilot uses **screen-based automation**. It looks at the game's interface, recognises relevant menus and values, and uses mouse and keyboard input to carry out the selected tasks.
 
@@ -412,6 +420,7 @@ The macro also keeps track of other events during either loop, including rare-ro
 Stopping ends the current session. The macro closes out the session information, removes its optional screen-dimming overlays and can send a Discord session summary if notifications are enabled.
 
 The next time you press Start, it begins a new session.
+</details>
 
 ---
 
