@@ -6,12 +6,12 @@
 
 **My Windows automation macro for the Roblox game *Dan RNG*.**
 
-![Version](https://img.shields.io/badge/Version-R1.6.1-7657E8?style=for-the-badge)
+![Version](https://img.shields.io/badge/Version-R1.6.2-7657E8?style=for-the-badge)
 ![Platform](https://img.shields.io/badge/Platform-Windows%2010%20%2F%2011-0078D6?style=for-the-badge)
 ![Project](https://img.shields.io/badge/Project-Community%20tool-30363D?style=for-the-badge)
 ![Status](https://img.shields.io/badge/Status-Live%20testing%20recommended-E3A008?style=for-the-badge)
 
-**[What's new](#-whats-new-in-r161) · [Features](#-features) · [Getting started](#-getting-started) · [Configuration](#configuration) · [Troubleshooting](#-diagnostics-and-troubleshooting) · [FAQ](#-frequently-asked-questions)**
+**[What's new](#-whats-new-in-r162) · [Features](#-features) · [Getting started](#-getting-started) · [Configuration](#configuration) · [Troubleshooting](#-diagnostics-and-troubleshooting) · [FAQ](#-frequently-asked-questions)**
 
 *Unofficial third-party project. Not affiliated with Roblox or the developers of Dan RNG.*
 
@@ -28,7 +28,7 @@ It handles rolling, upgrades, rebirths, Index Collection and longer sessions. I 
 My main goal is simple: **the macro should know what it is trying to do, verify important actions, and avoid making risky decisions when it cannot tell what is happening.**
 
 > [!IMPORTANT]
-> **Version note:** This README covers **R1.6.1 — Hunter, Coins & Anti-AFK Patch** (7 November 2026). It includes the existing R1.6 features plus the changes listed below. Offline checks passed, but I have **not yet confirmed every behaviour in a live Roblox session**. Always read the release notes and test new builds before running them unattended.
+> **Version note:** This README covers **R1.6.2 — Display Dimming Fix** (7 November 2026). It includes all of the documented **R1.6.1 Hunter, Coins & Anti-AFK Patch** changes as well as the new display-dimming fix. The R1.6.2 offline checks passed, including overlay and regression tests, but I **have not yet verified the new display behaviour in a real Windows/Roblox session**. Please check the release notes and supervise the first run before using the macro unattended.
 
 ### At a glance
 
@@ -43,13 +43,32 @@ My main goal is simple: **the macro should know what it is trying to do, verify 
 | 🛠️ Reliability | Watchdogs, retries, safe five-minute anti-AFK, recovery and diagnostics |
 | 📊 Dashboard | Session information, progress indicators and event logs |
 | 🔔 Notifications | Optional outgoing Discord webhook alerts |
-| 🖥️ Windows | Primary-monitor targeting, resolution presets and optional dimming |
+| 🖥️ Windows | Primary-monitor targeting, resolution presets and optional ~80% all-monitor dimming using click-through overlays |
 
 ---
 
-## 🆕 What's new in R1.6.1
+## 🆕 What's new in R1.6.2
 
-This update is mainly about making **Hunter Mode more reliable** and handling the newer **coin-based Luck upgrades** properly. I also fixed the anti-AFK logic so it reacts to real inactivity instead of blindly running on a timer.
+**R1.6.2 fixes the optional screen dimmer.** My earlier GPU-gamma approach could appear to darken the monitors and then suddenly revert because Windows, graphics drivers or other software could override the gamma ramp. I replaced it with a **click-through black overlay** that is designed to stay in place until dimming is disabled or the macro stops.
+
+| Change | What it does |
+| --- | --- |
+| **New overlay-based dimming** | Uses semi-transparent black windows to darken the picture by roughly **80%**, instead of changing the GPU's colour/gamma settings. |
+| **All-monitor coverage** | Positions overlays across **all connected monitors**, even if the Roblox game itself is on only the Windows primary display. |
+| **Click-through behaviour** | The overlays are intended to let mouse clicks and other normal interactions pass through to the application underneath rather than trapping input. |
+| **Smooth fades** | Retains a gradual transition instead of instantly jumping to the dimmed state. |
+| **Screenshot safety** | Uses Windows screenshot-exclusion support so the overlays are not supposed to cover the game images the macro uses for OCR and visual checks. This depends on OS support and still needs live verification. |
+| **Automatic cleanup** | Removes the overlays when the macro stops or closes, rather than leaving the desktop dark. If something unusual goes wrong, ending the macro process should also remove its windows. |
+| **Existing automation preserved** | Keeps the **R1.6.1** Hunter Mode, coin-aware high-level Luck purchasing, Omega rebirth target, five-minute anti-AFK and the earlier cutscene/session features. |
+
+> [!IMPORTANT]
+> **Fullscreen limitation:** A game using **exclusive fullscreen** can appear on top of desktop overlays, which means dimming may not be visible over Roblox. Try **borderless/windowed fullscreen** if that happens. This is a Windows display limitation, not a reason to disable Roblox game-state checks.
+>
+> **Testing status:** R1.6.2 passed offline tests for multi-monitor geometry, dimming/fade levels, cleanup, screenshot-exclusion handling and regression checks for Hunter Mode, cutscenes and sessions. **Real Windows multi-monitor and live Roblox testing is still outstanding.** I won't describe those checks as confirmed in-game until they're actually tested.
+
+### R1.6.1 changes retained in R1.6.2
+
+The previous patch made **Hunter Mode** more reliable, introduced **coin-aware Luck upgrades** and improved **anti-AFK**. All of that stays in R1.6.2:
 
 | Change | What it does |
 | --- | --- |
@@ -60,7 +79,7 @@ This update is mainly about making **Hunter Mode more reliable** and handling th
 | **Updated rebirth target selector** | Offers **As Soon As Eligible** and **Mythic+** targets, including **Omega (1 in 1 trillion base rarity)**. Targets below the currently recognised game requirement are filtered out. |
 | **Five-minute anti-AFK** | Tracks actual cursor movement (including movement caused by the macro), only acts after around **five minutes without movement** when safe, stays off while paused and restarts its timer on Resume. |
 
-**Testing:** R1.6.1 passed offline regression and integration checks, existing R1.5.9 cutscene tests, source compilation checks and ZIP integrity checks. **Real Roblox testing is still needed** to confirm behaviour across different screens and game states.
+**Earlier testing:** R1.6.1 passed offline regression and integration checks, R1.5.9 cutscene checks, source compilation and ZIP integrity checks. Its in-game behaviour still depends on the actual Roblox UI and display setup.
 
 ---
 
@@ -134,7 +153,7 @@ The goal is to handle Index tasks before returning to normal farming, without re
 
 ### 🎯 Hunter Mode and goal-based farming
 
-I added **Hunter Mode** for when I want to keep rolling for rare auras **without rebirthing**. In **R1.6.1**, I also fixed the unnecessary Rebirth-menu navigation that existed in R1.6:
+I added **Hunter Mode** for when I want to keep rolling for rare auras **without rebirthing**. In **R1.6.1 and later**, I also fixed the unnecessary Rebirth-menu navigation that existed in R1.6:
 
 - Hunter Mode **skips the Rebirth check at session startup**.
 - After checking upgrades in Shop, it returns to **normal rolling**, not the Rebirth menu.
@@ -209,9 +228,21 @@ Configure a **Discord webhook** to receive outgoing notifications about relevant
 
 Notifications are **one-way alerts only**. The macro is not a Discord bot and does not accept remote commands through Discord.
 
-### 🌙 Optional screen dimming
+### 🌙 Optional screen dimming (fixed in R1.6.2)
 
-An optional dimming feature is designed to reduce visual distraction across **all monitors**, targeting approximately **80% dimming** while active. It is an overlay-style convenience feature rather than a replacement for Windows display calibration. Test it locally and make sure you retain a way to restore your screens.
+I added optional screen dimming for long farming sessions so my monitors do not have to stay at full brightness while the macro is working. In **R1.6.2**, I changed **how** it works:
+
+- **About 80% dimming:** semi-transparent black overlays darken the screen while the feature is enabled.
+- **All connected monitors:** the dimming is not restricted to the game monitor.
+- **Click-through:** the overlays should not consume clicks, so the macro and normal desktop controls can continue operating underneath.
+- **Smooth transitions:** dimming is meant to fade in and out rather than appearing abruptly.
+- **No gamma calibration changes:** the new approach does not rely on rewriting the GPU gamma ramp. It should not reset or replace any Windows display-calibration settings.
+- **Protected visual checks:** on supported Windows configurations, the overlays are excluded from screenshots used by the macro, so OCR and game-state recognition can still see the original game image.
+- **Cleanup:** stopping or closing the macro removes the dimming overlay windows; a forced application exit should also release its owned windows.
+
+**How to use it:** Enable the **optional dimming setting** in the macro before starting the session. The dimmer is intended to activate during automation and return the screens to their normal appearance on Stop or exit. If you need to inspect the screen, use Pause/Resume and confirm what your installed build does before relying on it; I have not yet independently verified every dim/undim transition live.
+
+**Note:** Overlay visibility depends on how the game is displayed. **Exclusive fullscreen can prevent the overlay from appearing above Roblox**; switching to borderless/windowed fullscreen is the first thing to try. The overlay also depends on Windows support for capture exclusion. Test with your own graphics driver and monitors before leaving the macro unattended.
 
 ---
 
@@ -232,15 +263,24 @@ An optional dimming feature is designed to reduce visual distraction across **al
 
 ### Download and install
 
+R1.6.2 comes in **two separate ZIPs**:
+
+| Package | Contents | Choose this if... |
+| --- | --- | --- |
+| **`Dan_RNG_Autopilot_R1_6_2_Release.zip`** | Complete runnable-from-source release including the project source/assets, **`RUN_FROM_SOURCE.bat`** and Windows **EXE builder**. | You want the normal installation/build files. |
+| **`Dan_RNG_Autopilot_R1_6_2_Source.zip`** | Pure source code and necessary project files, without release-launcher wrappers or build artifacts. | You want to inspect, edit or develop the code. |
+
+The standard release includes the tools to **build an EXE**. Do not assume the ZIP already contains a precompiled executable: use the included builder if you want one.
+
 1. Open the repository's **Releases** section.
 2. Download the package for the version you want to use.
 3. **Extract the ZIP fully** to a folder you can write to. Do not run directly from inside a ZIP preview.
 4. Keep the release's supporting files and folders together.
 5. Follow the appropriate launch method below.
 
-#### Option A — Run the supplied R1.6.1 source package
+#### Option A — Run the supplied R1.6.2 release from source
 
-The **R1.6.1 Hunter, Coins & Anti-AFK Patch** is distributed as **full source code with a Windows EXE builder**. The patch archive does **not** include a precompiled EXE.
+Use **`Dan_RNG_Autopilot_R1_6_2_Release.zip`** for the easiest setup. This package includes the **`RUN_FROM_SOURCE.bat`** launcher and an optional Windows EXE builder, as well as the application source and assets.
 
 1. Extract the package.
 2. Install a compatible Python version if the package requires one.
@@ -249,23 +289,24 @@ The **R1.6.1 Hunter, Coins & Anti-AFK Patch** is distributed as **full source co
 
 #### Option B — Build a Windows executable
 
-The R1.6.1 package includes an **optional Windows EXE builder**. Run the included build script on Windows and follow any instructions it displays. The builder is a separate packaging step: **the patch ZIP does not already contain a compiled EXE**.
+The **R1.6.2 release ZIP** includes an **optional Windows EXE builder**. Run the included build script on Windows and follow the onscreen instructions. Building is a separate step; the download is not being advertised as a precompiled EXE.
 
 If a future GitHub Release explicitly contains a prebuilt executable, follow that release's own download instructions instead.
 
 ### Quick start
 
 1. Launch Roblox and join **Dan RNG**.
-2. Put Roblox on your intended screen, preferably in fullscreen mode.
+2. Put Roblox on your intended screen. If you want overlay dimming, **borderless/windowed fullscreen** is safer than exclusive fullscreen.
 3. Launch Dan RNG Autopilot using **`RUN_FROM_SOURCE.bat`** (or an EXE that you built from the same release).
 4. Choose **Hunter Mode** if you only want to collect rolls without rebirthing, or a standard mode if you want automated rebirths.
 5. In standard mode, choose **As Soon As Eligible** or an available **Mythic+** target, including **Omega** if you want that threshold.
 6. Review Speed/Luck upgrades, gem goals, Index options and any Discord settings. If you are already around **Luck 1000+**, check that the visible coin balance and **Next level** price are readable.
-7. Review the session controls and the five-minute anti-AFK behaviour before starting.
-8. Click **Start** or press **F4** where the hotkey is enabled.
-9. Watch the first few cycles to confirm recognition, coin-cost checks and menu navigation match your game UI.
-10. Press **F5** to pause when needed, then resume after making supported changes.
-11. Use **Stop** when you want to end the session completely.
+7. If you want a darker screen during long sessions, turn on **optional screen dimming**. R1.6.2 uses overlays rather than GPU gamma. If you use exclusive fullscreen, test whether the overlay is visible or try borderless/windowed fullscreen.
+8. Review the session controls and the five-minute anti-AFK behaviour before starting.
+9. Click **Start** or press **F4** where the hotkey is enabled.
+10. Watch the first few cycles to confirm recognition, coin-cost checks and menu navigation match your game UI.
+11. Press **F5** to pause when needed, then resume after making supported changes.
+12. Use **Stop** when you want to end the session completely.
 
 **For a first run:** test it while present, with modest goals, before leaving a session unattended.
 
@@ -322,11 +363,13 @@ The macro's ability to locate controls depends on what it sees. For best results
 - Check which screen Windows considers **primary**.
 - Avoid switching resolution or changing Roblox UI scale in the middle of a run.
 - Be aware that unusual lighting, bright avatars and UI overlays can disrupt visual checks.
-- Test optional all-monitor dimming before leaving the computer.
+- Test the R1.6.2 click-through **all-monitor overlay dimming** before leaving the computer.
+- If the game is using exclusive fullscreen and does not appear dim, try **borderless/windowed fullscreen**; Windows may keep exclusive-fullscreen content above the overlay.
+- If OCR/screenshots look unexpectedly dark, turn dimming off and collect diagnostics: capture exclusion is OS-dependent.
 
 ### Editing settings while paused
 
-In R1.6.1, you can change supported goals, rebirth targets and other settings while paused. The changes are applied when you resume, and a Discord **configuration updated** alert may be sent if webhooks are enabled.
+In R1.6.2 (retaining R1.6.1 behaviour), you can change supported goals, rebirth targets and other settings while paused. The changes are applied when you resume, and a Discord **configuration updated** alert may be sent if webhooks are enabled.
 
 Do not change underlying files or forcibly restart multiple copies of the macro to adjust a running session.
 
@@ -398,7 +441,9 @@ Choose mode
                                                       Repeat
 ```
 
-During active operation, R1.6.1's anti-AFK watcher measures **real mouse movement**. Only after about five minutes without movement, and only when it is safe, can it take an anti-AFK action. It does nothing while paused and restarts its timer on Resume.
+During active operation, R1.6.2 retains R1.6.1's anti-AFK watcher measures **real mouse movement**. Only after about five minutes without movement, and only when it is safe, can it take an anti-AFK action. It does nothing while paused and restarts its timer on Resume.
+
+R1.6.2 also optionally displays a **separate all-monitor dimming overlay** while automating. It is not a different game mode and should not change the underlying decisions shown above.
 
 The actual code has extra timing checks, OCR safeguards and recovery steps. This diagram is intended to explain the workflow, not every internal state.
 
@@ -414,11 +459,14 @@ Use Debug Mode and the available diagnostic-export or screenshot controls when t
 | Luck, coins, rarity or gems look wrong | OCR can misread digits or UI text. For Luck 1000+, check the visible **coins** and **Next level** price and capture the relevant screenshot. |
 | Index Collection gets stuck | Verify the current stage and whether the game UI has changed; enable diagnostics. |
 | Rare cutscene interrupts navigation | Do not force-click through the animation. Let the UI return and check whether recovery resumes normally. |
-| Hunter Mode opens Rebirth menu | **R1.6.1 is intended to fix this.** Check that you are actually running R1.6.1, stop any older macro instance and capture diagnostics if the problem persists. |
+| Hunter Mode opens Rebirth menu | **This was fixed in R1.6.1 and retained in R1.6.2.** Check that you are actually running R1.6.1, stop any older macro instance and capture diagnostics if the problem persists. |
 | Luck 1000+ stops buying | Confirm that your coin balance exceeds the next-level price (including the safety buffer), that the purple **+1** button is visible and that you have not reached Luck 1100. |
 | Anti-AFK does not trigger | The macro checks for **five minutes of actual inactivity**, including its own mouse movement, and does not operate while paused or when unsafe. |
 | Discord notifications are missing | Check whether webhooks are enabled, the URL is current, the channel permits posting and the triggering event was actually verified. |
-| Dimming does not clear correctly | Stop the macro, exit its overlay/process if necessary and restore the normal display state. |
+| Screen dims and then immediately brightens again | Make sure you are on **R1.6.2**, which replaces the earlier GPU-gamma method. Confirm dimming is enabled and that the process remains running. |
+| Roblox is not dimmed but other monitors are | Exclusive fullscreen may cover desktop overlays. Try **borderless/windowed fullscreen**. |
+| OCR/screenshots seem dark or blocked when dimming is enabled | The macro depends on screenshot-exclusion support. Disable dimming, capture a diagnostic screenshot and check Windows compatibility. |
+| Dimming does not clear correctly | Use **Stop** and exit the macro. The R1.6.2 overlays should be destroyed when the owning process exits; if needed, end the stuck macro process and report the issue. |
 | Automation gets stuck after a UI update | Stop and collect diagnostics; the recognition logic may need to be updated for the new Roblox/Dan RNG interface. |
 
 ### Known limitations
@@ -428,7 +476,9 @@ Use Debug Mode and the available diagnostic-export or screenshot controls when t
 - Auto-recovery cannot guarantee recovery from every disconnect, UI state or game update.
 - Session statistics may be incomplete if a value was not reliably observed.
 - Long unattended sessions require live validation on the machine where the macro is running.
-- R1.6.1 includes a fix for the earlier **Hunter Mode navigation problem**, but live-game behaviour still needs validation.
+- R1.6.2 keeps the R1.6.1 fix for the earlier **Hunter Mode navigation problem**, but live-game behaviour still needs validation.
+- Overlay dimming may not appear over **exclusive-fullscreen games**; **capture exclusion** depends on Windows/graphics compatibility.
+- The R1.6.2 dimmer has passed offline tests, **not live Windows/Roblox confirmation**.
 - Offline tests are not a substitute for real-game tests.
 
 ---
@@ -451,11 +501,12 @@ The macro is not an anti-cheat bypass, does not guarantee account safety and sho
 
 ## 🗺️ Roadmap and proposed improvements
 
-R1.6.1 already includes the Hunter Mode navigation fix, Mythic+ rebirth targets (including Omega), coin-aware Luck 1000–1100 purchasing and five-minute anti-AFK. **Those are not future features anymore.**
+R1.6.2 already includes the **new overlay-based display dimmer**, as well as all R1.6.1 Hunter Mode navigation, Mythic+/Omega rebirth targets, coin-aware Luck 1000–1100 purchasing and five-minute anti-AFK. **Those are not future features anymore.**
 
 These are areas I still want to improve:
 
-- [ ] Verify the R1.6.1 changes during extended **live Roblox** sessions, including low-coin and high-level Luck situations.
+- [ ] Verify **R1.6.2 overlay dimming on real Windows desktops**, including multiple monitors, overlay cleanup, screenshot visibility and exclusive-fullscreen vs borderless mode.
+- [ ] Keep validating the R1.6.1 progression changes in extended **live Roblox** sessions, including low-coin and high-level Luck situations.
 - [ ] Continue stress-testing Stop → Start, recoveries and unexpected game UI states.
 - [ ] Refine OCR for changing coin values, upgrade costs, rarity text and unusual visual effects.
 - [ ] Keep improving long-running stability, cutscene detection and useful diagnostics.
@@ -475,21 +526,21 @@ No. It is an unofficial community-made automation project and is not endorsed by
 <details>
 <summary><strong>Does the macro require an EXE?</strong></summary>
 
-No. **R1.6.1** is supplied with the full source and a `RUN_FROM_SOURCE.bat` launcher, plus an optional Windows EXE builder. The R1.6.1 patch ZIP does **not** include a prebuilt EXE.
+No. **R1.6.2** is available as a normal release ZIP with the source, **`RUN_FROM_SOURCE.bat`** and an optional Windows EXE builder. There is also a separate **pure source ZIP**. You can run from source; building an EXE is optional. A prebuilt EXE is **not guaranteed** in the download.
 
 </details>
 
 <details>
 <summary><strong>Can I change settings during a run?</strong></summary>
 
-The intended R1.6.1 workflow is to **Pause**, edit supported settings and **Resume**. Avoid changing settings while the macro is actively clicking or using an outdated configuration.
+The intended R1.6.2 workflow is to **Pause**, edit supported settings and **Resume**. Avoid changing settings while the macro is actively clicking or using an outdated configuration.
 
 </details>
 
 <details>
 <summary><strong>Will Hunter Mode rebirth?</strong></summary>
 
-Hunter Mode is designed to **never intentionally perform a rebirth**. In **R1.6.1**, I also fixed the unnecessary Rebirth-menu navigation at startup, after Shop, and following Index Collection. If it still opens that menu, please report the issue with diagnostics.
+Hunter Mode is designed to **never intentionally perform a rebirth**. In **R1.6.1 and later**, I also fixed the unnecessary Rebirth-menu navigation at startup, after Shop, and following Index Collection. If it still opens that menu, please report the issue with diagnostics.
 
 </details>
 
@@ -504,6 +555,20 @@ From **Luck 1000 through 1099**, the macro reads the coin balance and the labell
 <summary><strong>Does the anti-AFK timer keep running while I am paused?</strong></summary>
 
 No. R1.6.1 disables anti-AFK while paused and resets the five-minute inactivity timer when the session resumes. Mouse movement from the macro itself also counts as activity.
+
+</details>
+
+<details>
+<summary><strong>What changed with the screen dimmer in R1.6.2?</strong></summary>
+
+The old GPU gamma-based method could fade in and then revert unexpectedly. R1.6.2 uses **click-through black overlays** over all monitors for roughly **80% dimming** instead. It leaves the GPU's gamma calibration alone, removes the overlays when the macro stops/closes and is designed to exclude the overlays from automation screenshots on compatible Windows versions. Live confirmation is still needed.
+
+</details>
+
+<details>
+<summary><strong>Why does Roblox stay bright when dimming is enabled?</strong></summary>
+
+Games in **exclusive fullscreen** can draw above desktop overlays. Try Roblox in **borderless/windowed fullscreen**, and check whether the other monitors dim. If screenshots or OCR are affected, disable dimming and capture diagnostics for a bug report.
 
 </details>
 
@@ -541,12 +606,13 @@ Use the repository's **Issues** section if enabled. Include the version, setting
 
 | Version | Notes |
 | --- | --- |
+| **R1.6.2 — Display Dimming Fix** | Replaced unstable GPU-gamma dimming with ~80% click-through black overlays across all monitors, with fades, screenshot-exclusion support and cleanup on Stop/close. Preserves the R1.6.1 automation and anti-AFK features. Offline tests passed; live Windows/Roblox validation remains. |
 | **R1.6.1 — Hunter, Coins & Anti-AFK Patch** | Fixed Hunter Mode's unnecessary Rebirth navigation, added dynamic Mythic+ and Omega targets, added one-by-one coin-verified Luck purchases at levels 1000–1099 (cap 1100), safe five-minute anti-AFK and retry-to-rolling behaviour when a high-level Luck upgrade is unaffordable. |
 | **R1.6** | Added the Hunter Mode and adaptive/goal-oriented progression foundation, optional Smart Secret Farming, paused setting changes, dashboard, recovery and session features. |
 | **R1.5.9** | Earlier cutscene-protection and progression base retained by subsequent releases. |
 | **R1.5.4** | Earlier reconnect/recovery work, diagnostics, gem/rank recognition and Index Collection improvements. |
 
-**R1.6.1 distribution:** Full source + `RUN_FROM_SOURCE.bat` + optional Windows EXE builder. **No precompiled EXE** in the patch archive. I will include any more detailed changes and known issues in the release notes.
+**R1.6.2 distribution:** Two separate downloads: **`Dan_RNG_Autopilot_R1_6_2_Release.zip`** (source/assets, `RUN_FROM_SOURCE.bat`, Windows EXE builder) and **`Dan_RNG_Autopilot_R1_6_2_Source.zip`** (pure source). I will put any further changes and known issues in the GitHub Release notes.
 
 ## 🤝 Feedback and bug reports
 
