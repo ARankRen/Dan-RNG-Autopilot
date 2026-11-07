@@ -226,11 +226,10 @@ The log gives you an overview of what the macro has been doing without needing t
 ### Installing the macro
 
 1. Open the project's **GitHub Releases** page.
-2. Download the latest **Dan RNG Autopilot `.exe`** release. If it comes inside a ZIP, download and extract the ZIP first.
-3. Keep the downloaded release files together in a folder of your choice.
-4. Launch the **Dan RNG Autopilot `.exe`**.
-5. Open Roblox and join **Dan RNG** if you haven't already.
-6. Configure the macro using the steps below.
+2. Download the latest **Dan RNG Autopilot `.exe`** release. 
+3. Launch the **Dan RNG Autopilot `.exe`**.
+4. Open Roblox and join **Dan RNG** if you haven't already.
+5. Configure the macro using the steps below.
 
 You only need the release download to run the application. There are no Python setup or code-building steps.
 </details>
