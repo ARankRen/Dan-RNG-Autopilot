@@ -2,18 +2,17 @@
 
 # 🎲 Dan RNG Autopilot
 
-### Automated progression. Intelligent decisions. Built for long sessions.
+### Automated rolling, upgrades and rebirths for Roblox Dan RNG
 
-**My Windows automation macro for the Roblox game *Dan RNG*.**
+**A Windows macro I made to automate Dan RNG progression and make long farming sessions easier to manage.**
 
-![Version](https://img.shields.io/badge/Version-R1.6.2-7657E8?style=for-the-badge)
+![Version](https://img.shields.io/badge/Version-R1.6.2-7456E8?style=for-the-badge)
 ![Platform](https://img.shields.io/badge/Platform-Windows%2010%20%2F%2011-0078D6?style=for-the-badge)
-![Project](https://img.shields.io/badge/Project-Community%20tool-30363D?style=for-the-badge)
-![Status](https://img.shields.io/badge/Status-Live%20testing%20recommended-E3A008?style=for-the-badge)
+![Download](https://img.shields.io/badge/Download-Windows%20EXE-288B61?style=for-the-badge)
 
-**[What's new](#-whats-new-in-r162) · [Features](#-features) · [Getting started](#-getting-started) · [Configuration](#configuration) · [Troubleshooting](#-diagnostics-and-troubleshooting) · [FAQ](#-frequently-asked-questions)**
+**[Overview](#-overview) · [Features](#-features) · [Installation](#-download--installation) · [How to use](#-how-to-use-the-macro) · [Settings](#settings--modes) · [Controls](#controls) · [Support](#-support--bug-reports)**
 
-*Unofficial third-party project. Not affiliated with Roblox or the developers of Dan RNG.*
+*An unofficial third-party project. Not affiliated with Roblox or the developers of Dan RNG.*
 
 </div>
 
@@ -21,77 +20,30 @@
 
 ## 📖 Overview
 
-I made **Dan RNG Autopilot** to automate the repetitive progression in Dan RNG. Instead of just clicking on a fixed timer, it tries to make decisions using what it can actually see in the game.
+I made **Dan RNG Autopilot** to take care of the repetitive parts of Dan RNG, including rolling, purchasing upgrades, completing rebirths and managing progression goals.
 
-It handles rolling, upgrades, rebirths, Index Collection and longer sessions. I also added configurable goals, visual detection, session statistics, Discord notifications and recovery tools to make it more reliable.
+The macro is designed to do more than repeat clicks at fixed intervals. It reads what's happening on the screen and uses that information to decide what to do next. For example, it can check which upgrades are available, work towards a selected rebirth rarity and return to rolling when there isn't anything else to purchase.
 
-My main goal is simple: **the macro should know what it is trying to do, verify important actions, and avoid making risky decisions when it cannot tell what is happening.**
+You can use it for regular rebirth farming or switch to **Hunter Mode** to focus on collecting rare auras without rebirthing. There are also optional features for Index Collection, Discord notifications, anti-AFK and screen dimming.
 
-> [!IMPORTANT]
-> **Version note:** This README covers **R1.6.2 — Display Dimming Fix** (7 November 2026). It includes all of the documented **R1.6.1 Hunter, Coins & Anti-AFK Patch** changes as well as the new display-dimming fix. The R1.6.2 offline checks passed, including overlay and regression tests, but I **have not yet verified the new display behaviour in a real Windows/Roblox session**. Please check the release notes and supervise the first run before using the macro unattended.
+**This README covers Dan RNG Autopilot R1.6.2.** The macro is distributed as a Windows **`.exe`**, so you don't need to install Python or build anything yourself.
 
-### At a glance
+### What can it do?
 
-| Area | Capabilities |
-| --- | --- |
-| 🎲 Rolling | Automatic rolling and roll-state monitoring |
-| 🔁 Rebirths | Rarity-based targets, automatic confirmation and session tracking |
-| ⬆️ Upgrades | Speed-first purchasing, adaptive farming and coin-checked Luck levels 1000–1100 |
-| 📚 Index | Multi-stage Index Collection workflow |
-| 🎯 Goals | Rebirth-free Hunter Mode, dynamic Mythic+ targets (including Omega) and gem goals |
-| 🧠 Detection | Visual UI checks, OCR safeguards and cutscene awareness |
-| 🛠️ Reliability | Watchdogs, retries, safe five-minute anti-AFK, recovery and diagnostics |
-| 📊 Dashboard | Session information, progress indicators and event logs |
-| 🔔 Notifications | Optional outgoing Discord webhook alerts |
-| 🖥️ Windows | Primary-monitor targeting, resolution presets and optional ~80% all-monitor dimming using click-through overlays |
-
----
-
-## 🆕 What's new in R1.6.2
-
-**R1.6.2 fixes the optional screen dimmer.** My earlier GPU-gamma approach could appear to darken the monitors and then suddenly revert because Windows, graphics drivers or other software could override the gamma ramp. I replaced it with a **click-through black overlay** that is designed to stay in place until dimming is disabled or the macro stops.
-
-| Change | What it does |
-| --- | --- |
-| **New overlay-based dimming** | Uses semi-transparent black windows to darken the picture by roughly **80%**, instead of changing the GPU's colour/gamma settings. |
-| **All-monitor coverage** | Positions overlays across **all connected monitors**, even if the Roblox game itself is on only the Windows primary display. |
-| **Click-through behaviour** | The overlays are intended to let mouse clicks and other normal interactions pass through to the application underneath rather than trapping input. |
-| **Smooth fades** | Retains a gradual transition instead of instantly jumping to the dimmed state. |
-| **Screenshot safety** | Uses Windows screenshot-exclusion support so the overlays are not supposed to cover the game images the macro uses for OCR and visual checks. This depends on OS support and still needs live verification. |
-| **Automatic cleanup** | Removes the overlays when the macro stops or closes, rather than leaving the desktop dark. If something unusual goes wrong, ending the macro process should also remove its windows. |
-| **Existing automation preserved** | Keeps the **R1.6.1** Hunter Mode, coin-aware high-level Luck purchasing, Omega rebirth target, five-minute anti-AFK and the earlier cutscene/session features. |
-
-> [!IMPORTANT]
-> **Fullscreen limitation:** A game using **exclusive fullscreen** can appear on top of desktop overlays, which means dimming may not be visible over Roblox. Try **borderless/windowed fullscreen** if that happens. This is a Windows display limitation, not a reason to disable Roblox game-state checks.
->
-> **Testing status:** R1.6.2 passed offline tests for multi-monitor geometry, dimming/fade levels, cleanup, screenshot-exclusion handling and regression checks for Hunter Mode, cutscenes and sessions. **Real Windows multi-monitor and live Roblox testing is still outstanding.** I won't describe those checks as confirmed in-game until they're actually tested.
-
-### R1.6.1 changes retained in R1.6.2
-
-The previous patch made **Hunter Mode** more reliable, introduced **coin-aware Luck upgrades** and improved **anti-AFK**. All of that stays in R1.6.2:
-
-| Change | What it does |
-| --- | --- |
-| **Hunter Mode navigation fix** | Skips the startup Rebirth check, closes Shop back to normal gameplay and returns to normal gameplay after Index Collection restoration. Hunter Mode no longer intentionally routes through the Rebirth menu. |
-| **Coin-aware Luck levels 1000–1099** | Reads the visible coin balance and the **Next level** cost, verifies affordability with a small buffer, then buys **one level at a time** and rechecks the UI. |
-| **Luck cap handling** | Stops attempting coin-based Luck purchases at **level 1100**. |
-| **Smarter retry behaviour** | If the next Luck level is unaffordable, Hunter Mode returns to rolling instead of staying stuck in Shop; it can check again after roughly **12 seconds**. |
-| **Updated rebirth target selector** | Offers **As Soon As Eligible** and **Mythic+** targets, including **Omega (1 in 1 trillion base rarity)**. Targets below the currently recognised game requirement are filtered out. |
-| **Five-minute anti-AFK** | Tracks actual cursor movement (including movement caused by the macro), only acts after around **five minutes without movement** when safe, stays off while paused and restarts its timer on Resume. |
-
-**Earlier testing:** R1.6.1 passed offline regression and integration checks, R1.5.9 cutscene checks, source compilation and ZIP integrity checks. Its in-game behaviour still depends on the actual Roblox UI and display setup.
-
----
-
-## 🖼️ Screenshots
-
-I will add screenshots of the main dashboard, settings, the macro running and Discord notifications here. They will be stored in `docs/images/`.
-
-<!-- Replace these comments when screenshots exist:
-![Dashboard](docs/images/dashboard.png)
-![Settings](docs/images/settings.png)
-![Discord notifications](docs/images/discord-notifications.png)
--->
+| Feature | Description |
+| :--- | :--- |
+| 🎲 **Automatic rolling** | Handles rolling during an automation session. |
+| 🔁 **Automatic rebirths** | Rebirths according to your chosen rarity target. |
+| 🎯 **Hunter Mode** | Farms without rebirthing, for players focusing on rare auras. |
+| ⬆️ **Automatic upgrades** | Manages Speed and Luck upgrades as you progress. |
+| 🪙 **Coin-based Luck upgrades** | Uses in-game coin prices when purchasing Luck levels 1000–1099. |
+| 📚 **Index Collection** | Handles the supported Index Collection stages. |
+| 💎 **Progression goals** | Includes configurable rebirth, gem and farming goals. |
+| 🌌 **Rare-roll awareness** | Handles rare-roll cutscenes and waits for the regular game interface. |
+| 🖥️ **Screen dimming** | Optionally darkens connected monitors during farming. |
+| 💤 **Anti-AFK** | Includes an inactivity-based anti-AFK routine. |
+| 🔔 **Discord notifications** | Sends session and progression updates to a Discord channel. |
+| 📊 **Session dashboard** | Displays progress, activity and session information. |
 
 ---
 
@@ -99,537 +51,472 @@ I will add screenshots of the main dashboard, settings, the macro running and Di
 
 ### 🎲 Automatic rolling
 
-- Handles the repetitive rolling workflow during an active session.
-- Monitors visible game-state indicators to check whether rolling appears to be progressing.
-- Includes watchdog logic intended to detect stalled rolling and attempt recovery.
-- Accounts for rolling behaviour that may show one, two or three rolls per cycle.
-- Avoids treating every temporary UI disappearance as permission to click.
+The macro handles the normal rolling process while it manages your progression in the background.
 
-### 🔁 Automatic rebirths
+- Continues rolling during farming periods.
+- Checks the current game interface before moving between menus.
+- Switches between rolling, upgrading and rebirthing based on the selected mode.
+- Recognises when the usual interface is hidden by a rare-roll animation.
+- Returns to rolling after completing other tasks.
 
-- Works toward a **selected rebirth rarity** instead of rebirthing at arbitrary moments.
-- Supports **As Soon As Eligible** or a specific rarity from **Mythic upward**, including **Omega** (1 in 1 trillion base rarity).
-- Filters target choices below the game's currently recognised minimum rebirth requirement, so the list better reflects what can actually be selected.
-- Navigates the Rebirth menu, checks eligibility and handles confirmation **in standard rebirth modes**.
-- Tracks observed rebirths for the current session and returns to progression afterward.
-- Avoids attempting a rebirth when the necessary visual evidence is missing.
+You can leave the macro focused on progression rather than manually managing each part of the loop.
 
-**Hunter Mode deliberately does not rebirth.** In R1.6.1, I also corrected the related navigation so Hunter Mode does not intentionally visit Rebirth at startup, when closing Shop or after Index Collection restoration.
+### 🔁 Automatic rebirth farming
 
-**Important:** Eligibility still depends on what the macro can recognise from the game. UI updates and OCR mistakes can affect detection, so test a new release before relying on it unattended.
+In standard farming mode, the macro works towards a rebirth target you choose.
 
-### ⬆️ Speed and Luck upgrade automation
+You can select **As Soon As Eligible** or choose a specific supported rebirth rarity, starting from **Mythic** and extending up to **Omega**. The available targets are adjusted according to the game's current rebirth requirement.
 
-The normal upgrade strategy prioritises efficient progression:
+During a session, the macro:
 
-1. Buy available **Speed** upgrades until Speed is maxed or blocked.
-2. Purchase affordable **Luck** upgrades instead of endlessly revisiting Speed after it has become blocked.
-3. Reassess upgrades as the game state changes, with **Adaptive Farming** enabled by default in the R1.6 progression system.
-4. Respect supported goals and protected gem balances where configured.
+1. Rolls and purchases relevant upgrades.
+2. Checks rebirth progress against your selected target.
+3. Opens the Rebirth interface when needed.
+4. Completes the rebirth once the selected conditions are met.
+5. Returns to farming and repeats the cycle.
 
-#### Coin-based Luck upgrades (R1.6.1)
+This mode is useful if your goal is to accumulate rebirths, gems and permanent progression.
 
-At **Luck level 1000 and above**, the macro uses the game's **coins** and the displayed **Next level** cost to decide whether it can afford another level. This part is intentionally conservative:
+### 🎯 Hunter Mode — farm without rebirthing
 
-- It reads the visible **yellow coin balance** and labelled next-level price using OCR.
-- It checks whether there appears to be enough coins, with approximately a **3% safety buffer**.
-- It confirms the values and the relevant **purple +1** purchase button against a fresh screenshot before buying.
-- It buys **exactly one Luck level per successful validation**, then checks again. It does **not** blindly batch-buy high-level upgrades.
-- If the purchase is not affordable or cannot be verified, it does not guess and spam the button.
-- When Hunter Mode cannot afford another level, it goes back to normal rolling and tries checking Shop again after roughly **12 seconds**.
-- It stops at **Luck level 1100**.
+**Hunter Mode** is for players who want to keep rolling for rare auras without spending those rolls on rebirths.
 
-For example, if the HUD shows **1.18T coins** and the next Luck upgrade costs **908.70B**, the macro can compare those values instead of assuming that a button is always affordable. This is an **OCR test example**, not a promise that every in-game number will be recognised correctly.
+In Hunter Mode, the macro:
 
-**Why one level at a time?** Once the price changes after a purchase, the macro needs to read the new cost. This is slower than blind clicking but much safer when upgrades become expensive.
+- Focuses on rolling and upgrades instead of rebirthing.
+- Skips unnecessary visits to the Rebirth menu.
+- Returns straight to normal rolling after checking the Shop.
+- Continues farming after Index Collection tasks.
+- Can revisit the Shop when more upgrades become affordable.
+
+Use Hunter Mode if you're trying to obtain a particularly rare aura, improve your collection or just want a roll-focused farming session.
+
+### ⬆️ Automatic Speed and Luck upgrades
+
+The upgrade system automatically manages your progression in the Shop.
+
+The general priority is:
+
+1. **Speed first** — purchase available Speed upgrades until they're maxed or temporarily blocked.
+2. **Luck next** — spend on affordable Luck upgrades rather than repeatedly trying to buy unavailable Speed levels.
+3. **Return to farming** — continue rolling and check upgrades again as you progress.
+
+The macro also includes **Adaptive Farming**, which adjusts some progression decisions based on the current game state and your selected settings.
+
+#### 🪙 Luck levels 1000–1100
+
+At higher Luck levels, upgrades require **coins**. The macro reads your displayed coin balance and the next upgrade price to manage these purchases.
+
+- Checks your current coins against the displayed next-level cost.
+- Purchases high-level Luck upgrades **one level at a time**.
+- Reads the updated cost after each purchase.
+- Returns to rolling when the next upgrade is not yet affordable.
+- Stops purchasing when Luck reaches **level 1100**.
+
+This lets high-level Luck progression fit into the regular farming loop without needing to manage each purchase manually.
 
 ### 📚 Index Collection automation
 
-For players working through Index Collection, the macro includes a staged workflow that progresses through the following limit sequence:
+The macro includes support for Dan RNG's Index Collection progression.
+
+It can go through the following stages:
 
 `1 → 50 → 1,000 → 50,000 → Unlimited`
 
-The goal is to handle Index tasks before returning to normal farming, without requiring the user to manually revisit the menus at every stage. Game changes or recognition failures can interrupt the sequence; the live game UI remains the final source of truth.
+Once the selected Index workflow is completed, the macro returns to your normal farming mode. This is available alongside the regular upgrade and rebirth features.
 
-### 🎯 Hunter Mode and goal-based farming
+### 💎 Gem goals and farming options
 
-I added **Hunter Mode** for when I want to keep rolling for rare auras **without rebirthing**. In **R1.6.1 and later**, I also fixed the unnecessary Rebirth-menu navigation that existed in R1.6:
+Depending on how you want to progress, you can configure goals that influence the macro's decisions.
 
-- Hunter Mode **skips the Rebirth check at session startup**.
-- After checking upgrades in Shop, it returns to **normal rolling**, not the Rebirth menu.
-- After finishing or restoring Index Collection settings, it returns to **normal rolling** instead of navigating to Rebirth.
-- When a coin-based Luck upgrade is unaffordable, it carries on rolling and checks the price again later rather than blocking the farming loop.
+These include:
 
-Other goal-oriented options include:
+- **Rebirth targets:** Choose when the macro should rebirth based on rarity.
+- **Gem goals or reserves:** Set a balance you want to reach or preserve.
+- **Adaptive Farming:** Allow the macro to adjust farming behaviour to current conditions.
+- **Smart Secret Farming:** An optional late-game approach that can delay a rebirth in favour of aiming for Secret-tier results under suitable conditions.
 
-- Choosing an eligible rebirth target, from **Mythic to Omega**, or **As Soon As Eligible**, when using a rebirth-capable mode.
-- Tracking a desired gem balance or progression milestone.
-- Protecting a gem target from avoidable spending, where that setting is enabled.
-- Using optional **Smart Secret Farming**, designed to wait for a Secret-tier opportunity in suitable late-game conditions rather than always rebirthing immediately.
+You don't need to use every option. The best setup depends on whether you're prioritising rebirths, gems or rare auras.
 
-Smart Secret Farming is optional. Its intended use includes certain late-game situations around **Luck level 800+**, after relevant Index work. The exact results depend on the selected settings and what the macro can read from the game.
+### 🌌 Rare-roll cutscene awareness
 
-> [!NOTE]
-> The R1.6.1 Hunter fix changes **navigation**, not just whether the final confirmation button gets clicked. Hunter Mode is meant to remain in normal rolling/upgrade states without unnecessarily entering Rebirth. I still recommend checking this behaviour live when installing a new build.
+Dan RNG sometimes hides or changes the normal interface when a rare aura is rolled.
 
-### 👁️ Visual recognition and cutscene protection
+The macro accounts for those moments by temporarily holding off on its usual menu actions while the animation is happening. Once the regular interface returns, it continues the current task.
 
-Dan RNG can temporarily hide its regular interface during rare-roll animations. The macro includes cutscene-aware protection intended to:
+This helps keep farming, upgrading and rebirthing separate from rare-roll animations. Rarity-related visuals can also contribute to relevant Discord notifications.
 
-- Recognise when normal game UI elements disappear.
-- Suspend menu navigation while a rare-roll sequence appears to be playing.
-- Wait for the expected interface to return before resuming interaction.
-- Use rarity visuals as **supporting evidence**, not as the sole proof of a valuable roll.
-- Reduce accidental clicks during large visual effects, flashes and transitional screens.
+### 💤 Anti-AFK
 
-These checks are especially relevant to Secret, Forbidden and Omega-tier events. **Visual recognition is not infallible**, particularly with unusual avatars, game updates, overlays or intense effects.
+The macro includes an anti-AFK routine based on inactivity.
 
-### 🛠️ Recovery, anti-AFK and reliability
+- Tracks mouse movement during the session.
+- Uses an inactivity threshold of approximately **five minutes**.
+- Includes mouse movement generated by the macro itself when measuring activity.
+- Does not perform anti-AFK actions while the macro is paused.
+- Resets the inactivity timer when you resume.
 
-I have added reliability features for longer unattended sessions, including:
+It runs alongside normal automation rather than requiring a separate anti-AFK program.
 
-- Rolling-progress watchdogs and checks for stalled activity.
-- Retries and visual rechecks after uncertain interactions.
-- Recovery from common menu and rolling interruptions.
-- Protection against duplicate macro instances.
-- Clear separation between **Start**, **Stop**, **Pause** and **Resume**.
-- Conservative OCR handling when important values cannot be confirmed.
-- Diagnostic logs and screenshots for tracking down failures.
+### 🌙 Optional screen dimming
 
-#### Anti-AFK in R1.6.1
+For longer farming sessions, you can enable the screen dimmer to reduce how bright your displays are while the macro is running.
 
-The anti-AFK system looks at **actual cursor displacement** rather than simply assuming the player has been inactive after a fixed amount of time. Movements generated by the macro itself count as movement too.
+**R1.6.2 uses a display-overlay dimmer**, with the following features:
 
-- The inactivity threshold is **five minutes** without movement.
-- It only performs anti-AFK behaviour when the macro considers the current situation safe.
-- It is **disabled during Pause** so it does not interfere while I am inspecting the game or changing settings.
-- The timer is reset when I **Resume**, so it does not immediately fire based on time spent paused.
+- Darkens the image by approximately **80%**.
+- Covers **all connected monitors**.
+- Fades into the dimmed appearance.
+- Uses click-through overlays, so normal mouse input passes through them.
+- Keeps the underlying display colour and gamma calibration unchanged.
+- Separates the dimming overlay from the images used for game recognition.
+- Removes the dimming overlays when the macro stops or closes.
 
-This is designed to avoid unnecessary anti-AFK actions while the macro is already moving the mouse. It is not a guarantee against all game idle/disconnect behaviour.
+For this feature, **borderless/windowed fullscreen** is the recommended Roblox display mode.
 
-The macro is built with unattended sessions in mind, but **I still recommend supervising the first run of each version before leaving it running for hours**.
+Screen dimming is optional and can be left disabled if you prefer to see your screens normally.
 
-### 📊 Live dashboard and diagnostics
+### 🔔 Discord webhook notifications
 
-The application includes a live status interface with information such as:
+You can connect a Discord channel using a webhook URL to receive updates about your macro sessions.
 
-- Current macro state: running, paused, stopped or recovering.
-- Session runtime and observed progress.
-- Rebirth and gem information when recognised.
-- Selected goal and rebirth target.
-- Recent actions, warnings and errors.
-- Diagnostic information useful when reporting bugs.
+Notifications can include:
 
-Statistics derived from OCR or incomplete event tracking may be estimates or unavailable. A missing value should not be interpreted as zero.
+- Session start information, such as the version, mode and selected target.
+- Session summaries after stopping the macro.
+- Rebirth and progression events.
+- Important rare-roll events when recognised.
+- Configuration updates and other relevant session messages.
 
-### 🔔 Optional Discord notifications
+The webhook is used for **outgoing notifications**. It doesn't allow anyone in Discord to control your macro remotely.
 
-Configure a **Discord webhook** to receive outgoing notifications about relevant macro events. Depending on your version, alerts can include session starts, session summaries, settings changes, confirmed rare events and recovery messages.
+### 📊 Dashboard, statistics and activity log
 
-Notifications are **one-way alerts only**. The macro is not a Discord bot and does not accept remote commands through Discord.
+The macro includes an interface for managing your sessions and viewing activity.
 
-### 🌙 Optional screen dimming (fixed in R1.6.2)
+Depending on the current game state, you can see information such as:
 
-I added optional screen dimming for long farming sessions so my monitors do not have to stay at full brightness while the macro is working. In **R1.6.2**, I changed **how** it works:
+- Whether the macro is running, paused or stopped.
+- Your selected mode and rebirth target.
+- Current session duration.
+- Rebirths and other recorded progression.
+- Gem-related session information.
+- Recent actions and event messages.
 
-- **About 80% dimming:** semi-transparent black overlays darken the screen while the feature is enabled.
-- **All connected monitors:** the dimming is not restricted to the game monitor.
-- **Click-through:** the overlays should not consume clicks, so the macro and normal desktop controls can continue operating underneath.
-- **Smooth transitions:** dimming is meant to fade in and out rather than appearing abruptly.
-- **No gamma calibration changes:** the new approach does not rely on rewriting the GPU gamma ramp. It should not reset or replace any Windows display-calibration settings.
-- **Protected visual checks:** on supported Windows configurations, the overlays are excluded from screenshots used by the macro, so OCR and game-state recognition can still see the original game image.
-- **Cleanup:** stopping or closing the macro removes the dimming overlay windows; a forced application exit should also release its owned windows.
-
-**How to use it:** Enable the **optional dimming setting** in the macro before starting the session. The dimmer is intended to activate during automation and return the screens to their normal appearance on Stop or exit. If you need to inspect the screen, use Pause/Resume and confirm what your installed build does before relying on it; I have not yet independently verified every dim/undim transition live.
-
-**Note:** Overlay visibility depends on how the game is displayed. **Exclusive fullscreen can prevent the overlay from appearing above Roblox**; switching to borderless/windowed fullscreen is the first thing to try. The overlay also depends on Windows support for capture exclusion. Test with your own graphics driver and monitors before leaving the macro unattended.
+The log gives you an overview of what the macro has been doing without needing to watch the Roblox screen the whole time.
 
 ---
 
-## 🚀 Getting started
+## 📥 Download & installation
 
 ### Requirements
 
 - **Windows 10 or Windows 11**.
-- The Windows version of **Roblox**, with Dan RNG running.
-- A display configuration supported by the particular build; common presets include **1920×1080, 2560×1440 and 3840×2160**.
-- Permission for the macro to view the screen and send mouse/keyboard inputs.
-- For the **source package**: a compatible Python installation and any dependencies required by that release's setup instructions.
-- For Discord alerts: a Discord webhook URL (optional).
-- For Luck 1000+, a readable in-game **coin balance** and **Next level** price. The included OCR dependencies must be installed/configured as described by the release package.
+- **Roblox** installed on your PC.
+- Access to the **Dan RNG** experience on Roblox.
+- A display resolution supported by the macro, such as **1920×1080**, **2560×1440** or **3840×2160**.
+- An internet connection for Roblox and, if enabled, Discord notifications.
 
-> [!TIP]
-> The macro was designed around Roblox running **fullscreen** and normally targets the **Windows primary monitor**. If your gaming display is labelled "Monitor 2" in Windows but marked as the primary display, that is fine.
+**You do not need Python, programming knowledge or a development environment.** The public release is intended to be run as a Windows executable.
 
-### Download and install
+### Installing the macro
 
-R1.6.2 comes in **two separate ZIPs**:
+1. Open the project's **GitHub Releases** page.
+2. Download the latest **Dan RNG Autopilot `.exe`** release. If it comes inside a ZIP, download and extract the ZIP first.
+3. Keep the downloaded release files together in a folder of your choice.
+4. Launch the **Dan RNG Autopilot `.exe`**.
+5. Open Roblox and join **Dan RNG** if you haven't already.
+6. Configure the macro using the steps below.
 
-| Package | Contents | Choose this if... |
-| --- | --- | --- |
-| **`Dan_RNG_Autopilot_R1_6_2_Release.zip`** | Complete runnable-from-source release including the project source/assets, **`RUN_FROM_SOURCE.bat`** and Windows **EXE builder**. | You want the normal installation/build files. |
-| **`Dan_RNG_Autopilot_R1_6_2_Source.zip`** | Pure source code and necessary project files, without release-launcher wrappers or build artifacts. | You want to inspect, edit or develop the code. |
-
-The standard release includes the tools to **build an EXE**. Do not assume the ZIP already contains a precompiled executable: use the included builder if you want one.
-
-1. Open the repository's **Releases** section.
-2. Download the package for the version you want to use.
-3. **Extract the ZIP fully** to a folder you can write to. Do not run directly from inside a ZIP preview.
-4. Keep the release's supporting files and folders together.
-5. Follow the appropriate launch method below.
-
-#### Option A — Run the supplied R1.6.2 release from source
-
-Use **`Dan_RNG_Autopilot_R1_6_2_Release.zip`** for the easiest setup. This package includes the **`RUN_FROM_SOURCE.bat`** launcher and an optional Windows EXE builder, as well as the application source and assets.
-
-1. Extract the package.
-2. Install a compatible Python version if the package requires one.
-3. Run **`RUN_FROM_SOURCE.bat`** from the extracted folder.
-4. If dependency installation fails, read the error output and follow any included package instructions before retrying.
-
-#### Option B — Build a Windows executable
-
-The **R1.6.2 release ZIP** includes an **optional Windows EXE builder**. Run the included build script on Windows and follow the onscreen instructions. Building is a separate step; the download is not being advertised as a precompiled EXE.
-
-If a future GitHub Release explicitly contains a prebuilt executable, follow that release's own download instructions instead.
-
-### Quick start
-
-1. Launch Roblox and join **Dan RNG**.
-2. Put Roblox on your intended screen. If you want overlay dimming, **borderless/windowed fullscreen** is safer than exclusive fullscreen.
-3. Launch Dan RNG Autopilot using **`RUN_FROM_SOURCE.bat`** (or an EXE that you built from the same release).
-4. Choose **Hunter Mode** if you only want to collect rolls without rebirthing, or a standard mode if you want automated rebirths.
-5. In standard mode, choose **As Soon As Eligible** or an available **Mythic+** target, including **Omega** if you want that threshold.
-6. Review Speed/Luck upgrades, gem goals, Index options and any Discord settings. If you are already around **Luck 1000+**, check that the visible coin balance and **Next level** price are readable.
-7. If you want a darker screen during long sessions, turn on **optional screen dimming**. R1.6.2 uses overlays rather than GPU gamma. If you use exclusive fullscreen, test whether the overlay is visible or try borderless/windowed fullscreen.
-8. Review the session controls and the five-minute anti-AFK behaviour before starting.
-9. Click **Start** or press **F4** where the hotkey is enabled.
-10. Watch the first few cycles to confirm recognition, coin-cost checks and menu navigation match your game UI.
-11. Press **F5** to pause when needed, then resume after making supported changes.
-12. Use **Stop** when you want to end the session completely.
-
-**For a first run:** test it while present, with modest goals, before leaving a session unattended.
+You only need the release download to run the application. There are no Python setup or code-building steps.
 
 ---
 
-## 🎮 Controls
+## 🚀 How to use the macro
 
-| Control | Intended action |
-| --- | --- |
-| **Start** | Begin a fresh automation session |
-| **Stop** | End the current session and finalise its statistics |
-| **Pause / Resume** | Suspend or continue the current session |
-| **F4** | Start / Stop toggle |
-| **F5** | Pause / Resume toggle |
-| **F6** | Debug mode toggle |
-| **F7** | Capture a diagnostic screenshot |
+### 1. Launch Dan RNG
 
-Hotkeys and diagnostic availability can differ by package or application focus. Follow the controls displayed in your installed version if they differ from this table.
+Open Roblox, join **Dan RNG** and make sure the game's normal interface is visible.
 
-### Stop vs Pause
+The macro is designed to target your **Windows primary monitor**. If Windows calls your gaming display "Monitor 2" but it is set as your primary display, that's the display the macro should target.
 
-**Pause is temporary.** The current session is retained, and selected settings can be edited while paused. Changes are intended to take effect on resume.
+Choose the matching display/resolution settings in the application where applicable.
 
-**Stop is final for that session.** The session is ended, a summary can be produced and the next Start begins a new session with fresh session counters. Stop is not a substitute for Pause.
+### 2. Open the macro
 
----
+Launch the downloaded `.exe` and open the main control window.
 
-## Configuration
+You'll be able to choose your farming options, manage the session and view the activity log from the application.
 
-### Modes and progression targets
+### 3. Choose your mode
 
-| Option | Purpose |
-| --- | --- |
-| **Standard automation** | Roll, upgrade and rebirth according to the active target |
-| **Hunter Mode** | Keep hunting rolls without rebirthing or unnecessarily entering the Rebirth menu |
-| **Rebirth target** | Choose **As Soon As Eligible** or an available **Mythic+** rarity, including Omega (filtered by the current game requirement) |
-| **Adaptive farming** | Adjust progression decisions based on observed conditions; intended default: on |
-| **Smart Secret Farming** | Optionally delay a rebirth in suitable late-game circumstances |
-| **Gem goal / reserve** | Preserve a target balance or work toward a gem milestone |
-| **Index Collection** | Work through the supported Index stages, then return to normal rolling (including in Hunter Mode) |
+| Mode | Best for | Rebirths? |
+| :--- | :--- | :---: |
+| **Standard farming** | Collecting rebirths, gems and progressing through upgrades | ✅ Yes |
+| **Hunter Mode** | Continuous rolling for rare auras and collection goals | ❌ No |
 
-Select options based on your objective. A player accumulating rebirths should use different settings from someone hunting the rarest possible rolls.
+For standard farming, choose a rebirth target. For Hunter Mode, you can concentrate on rolling and upgrades without setting a rebirth goal.
 
-### Upgrade management
+### 4. Configure your settings
 
-The expected baseline is **Speed first until maxed or blocked, then buy affordable Luck upgrades**. At **Luck 1000–1099**, the macro also checks the **coin balance and next-level cost**, re-verifies affordability and buys at most one level per validation. If a level is unaffordable in Hunter Mode, it resumes rolling and checks again later. It stops trying at **Luck 1100**. Adaptive choices and gem protection may also influence spending.
+Review the available options, including:
 
-### Monitor and display settings
+- Your **rebirth rarity target**, if using standard farming.
+- **Adaptive Farming** and any optional Smart Secret Farming settings.
+- Gem goals or reserved gem balances, if desired.
+- **Index Collection** options.
+- Optional **Discord webhook** notifications.
+- Optional **screen dimming**.
 
-The macro's ability to locate controls depends on what it sees. For best results:
+You can start with the regular farming settings and adjust the more specialised options later.
 
-- Keep the expected Roblox window visible and unobstructed.
-- Use a supported resolution preset that matches your display.
-- Check which screen Windows considers **primary**.
-- Avoid switching resolution or changing Roblox UI scale in the middle of a run.
-- Be aware that unusual lighting, bright avatars and UI overlays can disrupt visual checks.
-- Test the R1.6.2 click-through **all-monitor overlay dimming** before leaving the computer.
-- If the game is using exclusive fullscreen and does not appear dim, try **borderless/windowed fullscreen**; Windows may keep exclusive-fullscreen content above the overlay.
-- If OCR/screenshots look unexpectedly dark, turn dimming off and collect diagnostics: capture exclusion is OS-dependent.
+### 5. Start farming
 
-### Editing settings while paused
+Click **Start** in the macro window or press **F4**.
 
-In R1.6.2 (retaining R1.6.1 behaviour), you can change supported goals, rebirth targets and other settings while paused. The changes are applied when you resume, and a Discord **configuration updated** alert may be sent if webhooks are enabled.
+The macro begins its selected workflow, switching between rolling, upgrades and rebirths as appropriate for your mode and configuration.
 
-Do not change underlying files or forcibly restart multiple copies of the macro to adjust a running session.
+### 6. Pause or stop whenever you want
+
+- Use **Pause** or **F5** to temporarily suspend the session.
+- Change supported settings while paused, then **Resume** to continue.
+- Use **Stop** or **F4** to end the session.
+
+**Pause and Stop are different:** Pause keeps your current session, while Stop ends it. Starting again after Stop begins a new session with new session statistics.
 
 ---
 
-## 🔔 Discord webhook setup
+## Controls
 
-A Discord webhook lets the macro post status information to a channel you choose.
+| Control | Action |
+| :--- | :--- |
+| **Start button** | Start a new macro session. |
+| **Stop button** | End the current macro session. |
+| **Pause / Resume** | Temporarily pause or continue the session. |
+| **F4** | Start / Stop shortcut. |
+| **F5** | Pause / Resume shortcut. |
+| **F6** | Toggle debug mode. |
+| **F7** | Capture a diagnostic screenshot. |
 
-1. In a Discord server where you have permission to manage webhooks, open the appropriate channel settings and create a webhook.
-2. Copy the webhook URL.
-3. Paste it into the macro's webhook setting.
-4. Save the setting and test it using a supported test method or a normal session event.
-5. Confirm that the message appears in the intended channel.
-
-### Example notification categories
-
-| Event | Intended information |
-| --- | --- |
-| Session started | Macro version, mode, goal, selected target and non-secret settings |
-| Configuration changed | Updated goal or settings applied when resuming |
-| Valuable roll | A verified rare event; details may depend on recognition support |
-| Error / recovery | Relevant failure or successful recovery, with anti-spam safeguards |
-| Session stopped | Runtime, observed rebirths, gems, rolls and relevant errors where available |
-
-**Never post your webhook URL publicly.** Anyone with that URL may be able to send messages through your webhook. Do not place it in GitHub issues, screenshots, logs, example configuration files or your repository. Regenerate the webhook if it is exposed.
-
-Webhook messages are notifications, **not remote-control commands**. No Discord bot or server-side control feature is required.
+The main day-to-day controls are **Start**, **Stop**, **Pause** and **Resume**. The extra shortcuts are available for diagnostics.
 
 ---
 
-## 🔍 How the automation works
+## Settings & modes
 
-The main workflow depends on the selected mode. This is a simplified look at how I designed it:
+### Picking a rebirth target
+
+When you use standard farming mode, you can choose **As Soon As Eligible** or select a specific rarity starting from **Mythic**. Targets include high-end rarities such as **Secret**, **Forbidden** and **Omega**, with the available selection based on the current rebirth requirement.
+
+A lower target generally focuses on more frequent rebirths; a higher target focuses on waiting for a rarer result before rebirthing.
+
+### Hunter Mode vs. regular farming
+
+The simplest way to choose is to ask yourself what you want from the session:
+
+- **Want rebirths and gems?** Use standard farming.
+- **Want to hunt rare auras without rebirthing?** Use Hunter Mode.
+
+Both modes can make use of upgrade automation and other supported progression options.
+
+### Choosing upgrade behaviour
+
+Speed upgrades are generally prioritised first, followed by affordable Luck upgrades. The macro also handles coin-based Luck purchases at higher levels and can return to rolling while saving up coins.
+
+You can use Adaptive Farming and other goal settings to change how progression is managed.
+
+### Screen and monitor settings
+
+The macro normally uses the Windows primary display to find the Roblox interface. Supported resolution presets include **1080p**, **1440p** and **4K**.
+
+If you enable screen dimming, the dimmer covers connected monitors rather than only the game display. **Borderless/windowed fullscreen** is the recommended display mode when using dimming.
+
+### Changing settings mid-session
+
+To change a supported setting while farming:
+
+1. Press **Pause** or **F5**.
+2. Update the setting in the macro window.
+3. Press **Resume** or **F5**.
+
+The session continues with the updated configuration.
+
+---
+
+## 🔔 Setting up Discord notifications
+
+Discord notifications are optional. They let you see key session updates from a channel you choose, including when you're away from the PC.
+
+1. Open Discord and go to a server where you can create webhooks.
+2. Open **Server Settings → Integrations → Webhooks** (the exact menu can vary).
+3. Create a webhook for the channel you want to use.
+4. Copy its **webhook URL**.
+5. Paste the URL into the webhook setting in Dan RNG Autopilot.
+6. Save your settings and enable the notifications you want.
+
+**Keep the webhook URL private.** Anyone with that URL may be able to post messages to your channel.
+
+---
+
+## 🧠 How the macro works (roughly)
+
+Dan RNG Autopilot uses **screen-based automation**. It looks at the game's interface, recognises relevant menus and values, and uses mouse and keyboard input to carry out the selected tasks.
+
+It doesn't need you to manually complete every rebirth or upgrade cycle.
+
+### Standard farming loop
 
 ```text
-START SESSION
-    |
-    v
-Verify Roblox and the visible game UI
-    |
-    v
-INDEX TASKS (if enabled)
-    |  Restore settings / return to normal rolling
-    v
-Choose mode
-    |
-    +--> HUNTER MODE ----------------------------------------+
-    |       No startup Rebirth-menu check                    |
-    |       Roll and monitor                                 |
-    |       Check Shop upgrades when appropriate             |
-    |       Luck 1000+: read coins + Next level price         |
-    |       Buy only one verified affordable level           |
-    |       Unaffordable? close Shop, roll, retry ~12s        |
-    |       Never intentionally initiate a rebirth           |
-    |                                                        |
-    +--> STANDARD MODE --------------------------------------+ 
-            Check available Speed / Luck upgrades            |
-            Roll toward selected eligible rebirth target     |
-            Verify Rebirth eligibility and confirmation      |
-            Complete rebirth if appropriate                  |
-                                                             v
-                                             Update session stats
-                                                             |
-                                              UI/cutscene safeguards
-                                                             |
-                                             Retry / recover if needed
-                                                             |
-                                                      Repeat
+Start session
+    ↓
+Read the current game interface
+    ↓
+Check progression and available upgrades
+    ↓
+Purchase suitable Speed / Luck upgrades
+    ↓
+Continue rolling
+    ↓
+Check selected rebirth target
+    ↓
+Rebirth when the target is met
+    ↓
+Update session information
+    ↓
+Repeat
 ```
 
-During active operation, R1.6.2 retains R1.6.1's anti-AFK watcher measures **real mouse movement**. Only after about five minutes without movement, and only when it is safe, can it take an anti-AFK action. It does nothing while paused and restarts its timer on Resume.
+### Hunter Mode loop
 
-R1.6.2 also optionally displays a **separate all-monitor dimming overlay** while automating. It is not a different game mode and should not change the underlying decisions shown above.
+```text
+Start session
+    ↓
+Check upgrades and optional goals
+    ↓
+Roll for auras
+    ↓
+Check whether more upgrades are affordable
+    ↓
+Return to rolling
+    ↓
+Repeat — without rebirthing
+```
 
-The actual code has extra timing checks, OCR safeguards and recovery steps. This diagram is intended to explain the workflow, not every internal state.
+The macro also keeps track of other events during either loop, including rare-roll animations, Index tasks, anti-AFK activity, optional screen dimming and Discord notifications.
 
-## 🧪 Diagnostics and troubleshooting
+### What happens when I press Stop?
 
-Use Debug Mode and the available diagnostic-export or screenshot controls when trying to reproduce a problem. If you report an issue, include the macro version, Windows and Roblox resolution, mode, selected target, steps to reproduce and the relevant log excerpt. **Remove webhook URLs and personal information before sharing logs.**
+Stopping ends the current session. The macro closes out the session information, removes its optional screen-dimming overlays and can send a Discord session summary if notifications are enabled.
 
-| Problem | What to check |
-| --- | --- |
-| Macro opens but does not click | Ensure Roblox is open, visible and on the expected primary monitor; check fullscreen/resolution settings. |
-| Start after Stop does nothing | Fully stop the session and confirm no duplicate macro instance remains. A Stop → Start lifecycle issue has previously been observed; restart the app and Roblox if necessary. |
-| Macro cannot locate Rebirth / Shop | Close unexpected pop-ups, verify Roblox UI scale and display resolution, and capture a diagnostic screenshot. |
-| Luck, coins, rarity or gems look wrong | OCR can misread digits or UI text. For Luck 1000+, check the visible **coins** and **Next level** price and capture the relevant screenshot. |
-| Index Collection gets stuck | Verify the current stage and whether the game UI has changed; enable diagnostics. |
-| Rare cutscene interrupts navigation | Do not force-click through the animation. Let the UI return and check whether recovery resumes normally. |
-| Hunter Mode opens Rebirth menu | **This was fixed in R1.6.1 and retained in R1.6.2.** Check that you are actually running R1.6.1, stop any older macro instance and capture diagnostics if the problem persists. |
-| Luck 1000+ stops buying | Confirm that your coin balance exceeds the next-level price (including the safety buffer), that the purple **+1** button is visible and that you have not reached Luck 1100. |
-| Anti-AFK does not trigger | The macro checks for **five minutes of actual inactivity**, including its own mouse movement, and does not operate while paused or when unsafe. |
-| Discord notifications are missing | Check whether webhooks are enabled, the URL is current, the channel permits posting and the triggering event was actually verified. |
-| Screen dims and then immediately brightens again | Make sure you are on **R1.6.2**, which replaces the earlier GPU-gamma method. Confirm dimming is enabled and that the process remains running. |
-| Roblox is not dimmed but other monitors are | Exclusive fullscreen may cover desktop overlays. Try **borderless/windowed fullscreen**. |
-| OCR/screenshots seem dark or blocked when dimming is enabled | The macro depends on screenshot-exclusion support. Disable dimming, capture a diagnostic screenshot and check Windows compatibility. |
-| Dimming does not clear correctly | Use **Stop** and exit the macro. The R1.6.2 overlays should be destroyed when the owning process exits; if needed, end the stuck macro process and report the issue. |
-| Automation gets stuck after a UI update | Stop and collect diagnostics; the recognition logic may need to be updated for the new Roblox/Dan RNG interface. |
-
-### Known limitations
-
-- **Visual and OCR-based automation can fail.** Text, animations, display scaling and overlays change over time.
-- A rare cutscene does not always produce enough evidence for a verified notification.
-- Auto-recovery cannot guarantee recovery from every disconnect, UI state or game update.
-- Session statistics may be incomplete if a value was not reliably observed.
-- Long unattended sessions require live validation on the machine where the macro is running.
-- R1.6.2 keeps the R1.6.1 fix for the earlier **Hunter Mode navigation problem**, but live-game behaviour still needs validation.
-- Overlay dimming may not appear over **exclusive-fullscreen games**; **capture exclusion** depends on Windows/graphics compatibility.
-- The R1.6.2 dimmer has passed offline tests, **not live Windows/Roblox confirmation**.
-- Offline tests are not a substitute for real-game tests.
+The next time you press Start, it begins a new session.
 
 ---
-
-## 🔒 Safety and privacy
-
-This project interacts with a live game using desktop automation. Please use it responsibly.
-
-- Review the **Roblox terms and the individual game's rules** before using third-party automation. Use may lead to enforcement actions, including account restrictions.
-- Download only from a source you trust. Executables and batch files can be dangerous if modified by someone else.
-- Avoid running unverified releases with unnecessary administrator permissions.
-- Treat the Discord webhook URL as a **secret**.
-- Review exported diagnostics before posting them publicly; screenshots can show usernames, private messages or other personal data.
-- Do not run two macro instances against the same Roblox session.
-- Do not assume successful testing on one computer guarantees the same result on another.
-
-The macro is not an anti-cheat bypass, does not guarantee account safety and should not be presented as officially supported by Roblox or Dan RNG.
-
----
-
-## 🗺️ Roadmap and proposed improvements
-
-R1.6.2 already includes the **new overlay-based display dimmer**, as well as all R1.6.1 Hunter Mode navigation, Mythic+/Omega rebirth targets, coin-aware Luck 1000–1100 purchasing and five-minute anti-AFK. **Those are not future features anymore.**
-
-These are areas I still want to improve:
-
-- [ ] Verify **R1.6.2 overlay dimming on real Windows desktops**, including multiple monitors, overlay cleanup, screenshot visibility and exclusive-fullscreen vs borderless mode.
-- [ ] Keep validating the R1.6.1 progression changes in extended **live Roblox** sessions, including low-coin and high-level Luck situations.
-- [ ] Continue stress-testing Stop → Start, recoveries and unexpected game UI states.
-- [ ] Refine OCR for changing coin values, upgrade costs, rarity text and unusual visual effects.
-- [ ] Keep improving long-running stability, cutscene detection and useful diagnostics.
-- [ ] Add verified screenshots and fuller release-by-release changelogs to this page.
-
-Plans can change, and I will update the README when something is actually included in a release.
 
 ## ❓ Frequently asked questions
 
 <details>
-<summary><strong>Is this an official Dan RNG or Roblox tool?</strong></summary>
+<summary><strong>Do I need to install Python?</strong></summary>
 
-No. It is an unofficial community-made automation project and is not endorsed by Roblox or the developers of Dan RNG.
-
-</details>
-
-<details>
-<summary><strong>Does the macro require an EXE?</strong></summary>
-
-No. **R1.6.2** is available as a normal release ZIP with the source, **`RUN_FROM_SOURCE.bat`** and an optional Windows EXE builder. There is also a separate **pure source ZIP**. You can run from source; building an EXE is optional. A prebuilt EXE is **not guaranteed** in the download.
+No. The macro is distributed as a Windows `.exe`, so you can download and launch the application directly.
 
 </details>
 
 <details>
-<summary><strong>Can I change settings during a run?</strong></summary>
+<summary><strong>Does Hunter Mode rebirth?</strong></summary>
 
-The intended R1.6.2 workflow is to **Pause**, edit supported settings and **Resume**. Avoid changing settings while the macro is actively clicking or using an outdated configuration.
-
-</details>
-
-<details>
-<summary><strong>Will Hunter Mode rebirth?</strong></summary>
-
-Hunter Mode is designed to **never intentionally perform a rebirth**. In **R1.6.1 and later**, I also fixed the unnecessary Rebirth-menu navigation at startup, after Shop, and following Index Collection. If it still opens that menu, please report the issue with diagnostics.
+No. Hunter Mode focuses on rolling, collecting auras and managing upgrades without rebirthing.
 
 </details>
 
 <details>
-<summary><strong>How does Luck level 1000+ purchasing work?</strong></summary>
+<summary><strong>Can I choose a specific rarity to rebirth at?</strong></summary>
 
-From **Luck 1000 through 1099**, the macro reads the coin balance and the labelled **Next level** cost, uses a small affordability buffer and validates each purchase individually. It stops at **Luck 1100**. When Hunter Mode cannot afford the next level, it keeps rolling rather than getting stuck in Shop.
-
-</details>
-
-<details>
-<summary><strong>Does the anti-AFK timer keep running while I am paused?</strong></summary>
-
-No. R1.6.1 disables anti-AFK while paused and resets the five-minute inactivity timer when the session resumes. Mouse movement from the macro itself also counts as activity.
+Yes. Choose **As Soon As Eligible** or a supported rarity from **Mythic** upward, including **Omega**. The target list reflects the current rebirth requirement.
 
 </details>
 
 <details>
-<summary><strong>What changed with the screen dimmer in R1.6.2?</strong></summary>
+<summary><strong>Will it automatically upgrade Speed and Luck?</strong></summary>
 
-The old GPU gamma-based method could fade in and then revert unexpectedly. R1.6.2 uses **click-through black overlays** over all monitors for roughly **80% dimming** instead. It leaves the GPU's gamma calibration alone, removes the overlays when the macro stops/closes and is designed to exclude the overlays from automation screenshots on compatible Windows versions. Live confirmation is still needed.
-
-</details>
-
-<details>
-<summary><strong>Why does Roblox stay bright when dimming is enabled?</strong></summary>
-
-Games in **exclusive fullscreen** can draw above desktop overlays. Try Roblox in **borderless/windowed fullscreen**, and check whether the other monitors dim. If screenshots or OCR are affected, disable dimming and capture diagnostics for a bug report.
+Yes. The standard upgrade order prioritises Speed until maxed or blocked, then affordable Luck. At Luck 1000+, the macro also uses the displayed coin balance and upgrade costs to manage purchases up to level 1100.
 
 </details>
 
 <details>
-<summary><strong>Can I automate from a second monitor?</strong></summary>
+<summary><strong>Can I change settings without starting a new session?</strong></summary>
 
-The macro normally targets the display set as **primary in Windows**, even if Windows calls it Monitor 2. Check your setup and do a short test first.
-
-</details>
-
-<details>
-<summary><strong>Does Discord control the macro?</strong></summary>
-
-No. Discord integration is intended for **outgoing notifications only**, not remote commands or control.
+Yes. Pause the macro, change the supported settings, and Resume. Stop ends the current session completely.
 
 </details>
 
 <details>
-<summary><strong>Will this work forever without supervision?</strong></summary>
+<summary><strong>Can I use it on a second monitor?</strong></summary>
 
-No automation can promise that. Game updates, disconnects, OCR mistakes and unexpected UI states can still cause failures. Watch the initial session and validate new releases before extended use.
+The macro targets the display set as **primary** in Windows. That display can be labelled Monitor 1 or Monitor 2 in your Windows settings.
 
 </details>
 
 <details>
-<summary><strong>Where can I get help with a bug?</strong></summary>
+<summary><strong>What does screen dimming do?</strong></summary>
 
-Use the repository's **Issues** section if enabled. Include the version, settings relevant to the problem, steps to reproduce and sanitized diagnostics. Never share your webhook URL.
+It darkens all connected monitors by around **80%** during farming using click-through overlays, without changing your usual Windows gamma calibration. The overlays are removed when the macro stops or exits.
+
+</details>
+
+<details>
+<summary><strong>Can Discord control my macro?</strong></summary>
+
+No. The Discord webhook feature sends notifications to your selected channel. It isn't a remote-control system.
+
+</details>
+
+<details>
+<summary><strong>Where can I report a bug or ask for help?</strong></summary>
+
+Contact **@resentenced on Discord**. Include the macro version and a brief explanation of the issue. Screenshots can help if they're relevant.
 
 </details>
 
 ---
 
-## 📝 Release information
+## 🆕 R1.6.2 feature highlights
 
-| Version | Notes |
-| --- | --- |
-| **R1.6.2 — Display Dimming Fix** | Replaced unstable GPU-gamma dimming with ~80% click-through black overlays across all monitors, with fades, screenshot-exclusion support and cleanup on Stop/close. Preserves the R1.6.1 automation and anti-AFK features. Offline tests passed; live Windows/Roblox validation remains. |
-| **R1.6.1 — Hunter, Coins & Anti-AFK Patch** | Fixed Hunter Mode's unnecessary Rebirth navigation, added dynamic Mythic+ and Omega targets, added one-by-one coin-verified Luck purchases at levels 1000–1099 (cap 1100), safe five-minute anti-AFK and retry-to-rolling behaviour when a high-level Luck upgrade is unaffordable. |
-| **R1.6** | Added the Hunter Mode and adaptive/goal-oriented progression foundation, optional Smart Secret Farming, paused setting changes, dashboard, recovery and session features. |
-| **R1.5.9** | Earlier cutscene-protection and progression base retained by subsequent releases. |
-| **R1.5.4** | Earlier reconnect/recovery work, diagnostics, gem/rank recognition and Index Collection improvements. |
+**R1.6.2** includes the updated screen-dimming system alongside the farming features from previous versions.
 
-**R1.6.2 distribution:** Two separate downloads: **`Dan_RNG_Autopilot_R1_6_2_Release.zip`** (source/assets, `RUN_FROM_SOURCE.bat`, Windows EXE builder) and **`Dan_RNG_Autopilot_R1_6_2_Source.zip`** (pure source). I will put any further changes and known issues in the GitHub Release notes.
+| Version | Main additions |
+| :--- | :--- |
+| **R1.6.2** | All-monitor overlay dimming, smooth transitions, click-through input and automatic overlay removal. |
+| **R1.6.1** | Hunter Mode navigation improvements, coin-based Luck upgrades, higher rebirth targets including Omega and inactivity-based anti-AFK. |
+| **R1.6** | Hunter Mode, more configurable progression goals, adaptive farming and session-management features. |
 
-## 🤝 Feedback and bug reports
+For individual release details, see the notes on the GitHub **Releases** page.
 
-If you find a bug or have an idea for a feature, feel free to open an Issue. Please include the version, what you expected to happen, what actually happened and how to reproduce it. Screenshots and logs are useful, but **remove webhook URLs and other private information** first.
+---
+
+## 💬 Support & bug reports
+
+If you have **any questions, issues, bugs or suggestions**, you can contact me directly on Discord:
+
+### **Discord: `@resentenced`**
+
+When reporting a bug, please include the **version you're using**, what happened and any useful screenshots or log messages. Please remove any private information, such as your Discord webhook URL, before sending them.
+
+---
 
 ## ⚠️ Disclaimer
 
-**This project was made with the help of AI.** I use AI tools to help develop, improve, debug and document the macro. I make the decisions about its features and direction, and I test the results. AI-assisted code can still contain bugs, so I cannot guarantee that everything will work perfectly.
+**I made this project with the help of AI.** I use AI tools to help write, improve and maintain the macro, while I decide on its features, direction and how I want it to behave.
 
-Dan RNG Autopilot is an **unofficial third-party tool** and is not affiliated with Roblox or the developers of Dan RNG. Using automation may go against game rules or Roblox policies, so **use it at your own risk**. I cannot guarantee compatibility with future updates, uninterrupted operation or account safety.
+Dan RNG Autopilot is an **unofficial third-party automation tool**. It is not affiliated with, endorsed by or supported by Roblox or the developers of Dan RNG. Make sure you understand the relevant game rules and Roblox policies before using automation.
 
 ---
 
 <div align="center">
 
-**🎲 Dan RNG Autopilot — Roll smarter. Manage progression. Keep track of the session.**
+### 🎲 Dan RNG Autopilot
 
-*Made for the Dan RNG community.*
+*Less repetitive clicking. More time for the parts of Dan RNG you care about.*
+
+**Questions or bugs? Discord: `@resentenced`**
 
 </div>
