@@ -47,8 +47,9 @@ You can use it for regular rebirth farming or switch to **Hunter Mode** to focus
 
 ---
 <details>
-<summary>Click to expand</summary>
-## ✨ Features
+
+
+<summary>## ✨ Features</summary>
 
 ### 🎲 Automatic rolling
 
